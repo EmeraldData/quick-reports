@@ -103,5 +103,5 @@ CREATE TABLE quick_reports.draft_reports (
 	,create_time TIMESTAMP WITH TIME zone NOT NULL DEFAULT now()
 	);
 
-INSERT INTO permission.permission_list (id,code,description) VALUES (DEFAULT, 'ADMIN_SIMPLE_REPORTS', 'Necessary for Admin of Quick Reports Add-on');
+INSERT INTO permission.perm_list (id,code,description) VALUES (DEFAULT, 'ADMIN_SIMPLE_REPORTS', 'Necessary for Admin of Quick Reports Add-on');
 COMMIT;

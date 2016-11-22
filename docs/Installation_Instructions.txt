@@ -1,0 +1,178 @@
+Evergreen Quick Reports Creator Installation Guide
+==================================================
+
+Prerequisites
+-------------
+
+. A working Apache web server, with PHP enabled
+
+** *Install PHP and extensions* (assumes Debian/Ubuntu based system), as root:
+----
+apt-get install php5 php5-gd php5-pgsql php5-memcache php-pear
+pecl install memcache # Note this step may not be required with later Ubuntu versions
+----
+** Restart Apache to activate PHP
+----
+/etc/init.d/apache2 restart
+----
+** Create the directory report-creator.  We recommend using the preconfigured Evergreen ILS vhost and placing the files in its root (/openils/var/web)
+----
+mkdir /openils/var/web/report-creator
+----
+** Since Apache runs as opensrf user in most Evergreen installs, we must allow report-creator dir to be writable by the opensrf user (adjust if you are using a different user)
+----
+chown opensrf:opensrf /openils/var/web/report-creator
+----
+. PHP
+** This version of Quick Reports was tested on PHP 5.3.10 with the following extensions:
+----
+pdo_pgsql
+memcache
+----
+. Need to force the /openils/var/web/report-creator/index.php to load by default, utilizing an .htaccess file (included in this source code) or by creating a new file at /openils/var/web/report-creator/.htaccess containing;
+----
+DirectoryIndex index.php
+----
+
+Installation
+------------
+
+[NOTE]
+===========================
+	Note: all paths are relative to the directory where you installed the software
+
+===========================
+
+. Create a new database schema and tables in your pre-existing PostgreSQL instance, installed by Evergreen, by executing the SQL commands in the file entitled +sql/quick_reports_setup.sql+
+
+** The default schema that will be created is named quick_reports. This can be edited if you want to use a different schema.  Simply edit the quick_reports_setup.sql according to your preferred schema name.
+
+. If necessary, grant SELECT and UPDATE privileges to the user account that will be used to connect to the database from php. Depending on how you configure the application in the steps below, this is either the user defined in the <reporter> node of the file /openils/conf/openils.xml or a user you specify in the config file below.
+
+. Extract (or pull from Git) the report-creator application files into the previously created /openils/var/web/report-creator directory so that directory is populated and contains the PHP, CSS, and other code files for Quick Reports.
+
+. If necessary, change ownership of the files so they can be executed by the web server (typically chown them to the opensrf user).
+
+. Validate that the web server is able to execute php scripts by executing <install_location>/tools/testphp.php from your browser. You should see 
+----
+Hello World! PHP is running.
+----
+. Configure the production.config.php file located in the report-creator/config directory. Refer to the Configuration Parameters section below.
+
+. Test the connection to PostgreSQL by running <install_location>/tools/testdb.php from your browser. 
+** The tool will attempt to connect to the database and execute a query that returns a count of templates in the reporter.template table. You should see output similar to:
+----
+[db:protected] => PDO Object
+15 templates were found in reporter.template
+----
+** Check the php error logs for errors if you are not seeing connection information or the number of templates displayed, or if errors are displayed. 
+
+. If you will be using memcache to store sessions (for example, in a clustered “brick” environment), test the connection to the memcache server by running <install_location>/tools/testmemcache.php from your browser. 
+** If there are any error messages then there is a problem connecting to the memcache server. Resolve the issue and retest.
+** If successful, you will see the following message:
+----
+A session variable was set. Please refresh the page.
+----
+** Refresh the page by pressing F5. You will then see:
+----
+Session variables appear to be operating correctly. 
+Array ( [lastAccessTime] => 1429379837 [testMemcache] => ok 
+----
+
+[NOTE]
+===============================
+Note: The value of last AccessTime that you see will be different since it represents the current timestamp. If you refresh the page again, the lastAccessTime should increase. If it does then memcache sessions are working correctly.
+===============================
+
+** Check the php error logs for errors if you are not seeing this behavior.
+
+. A second tool for testing memcache is provided. Execute this from your browser:
+	
++<install_location>/tools/testmemcache2.php>+
+
+This tool is simpler and will display the version of memcache. Check the php error logs for errors if the version is not displayed.
+
+. Test the software by executing https://www.yourdomain.tld/report-creator in your preferred web browser.  You should be able to log in with a valid Evergreen user with the proper permissions to access the Quick Reports as shown below.
+
+[NOTE]
+=================================
+Note: The web server must be able to execute index.php without having to include index.php on the URL (see prerequisite note about .htaccess)
+
+=================================
+
+Evergreen User Permission Requirements
+--------------------------------------
+
+The QR Admin must have the following permissions:
+* ADMIN_SIMPLE_REPORTS
+* CREATE_REPORT_TEMPLATE
+* RUN_REPORTS
+* SHARE_REPORT_FOLDER
+* VIEW_REPORT_OUTPUT
+
+All library staff who will access Quick Reports must have:
+* RUN_REPORTS
+* VIEW_REPORT_OUTPUT
+
+Troubleshooting
+---------------
+
+If you are still having problems with php you can check your installation by creating a phpinfo page and execute it from your web browser. The contents of the page should be:
+
+----
+<?php
+phpinfo();
+?>
+----
+
+Save this file with a .php extension and execute it from your browser. Check the configuration for the following sections. 
+* memcache (if you are using memcache to store session information)
+* PDO
+* pdo_pgsql
+* pgsql  
+
+[NOTE]
+=============
+IMPORTANT: Be sure to remove this file when you are done. It provides important configuration information that could potentially be used to compromise the security of your environment.
+
+=============
+
+.CONFIGURATION PARAMETERS
+[options="header"]
+|==============================
+| PARAMETER | DESCRIPTION | DEFAULT | ADDITIONAL REFERENCE
+| ERROR_REPORTING_LEVEL | php error reporting level | E_ALL | http://php.net/manual/en/errorfunc.constants.php
+| DEFAULT_TIME_ZONE | | | http://php.net/manual/en/timezones.america.php
+| SITE_ROOT | The application directory | / | This is the <install_location> used in the instructions above. 
+| SESSION_TIMEOUT | Sessions expire after this many minutes | 120 | ERROR_REPORTING_LEVEL
+| BROWSER_PAGE_CACHE_TIMEOUT | Browser page cache time in seconds |  20 | DEFAULT_TIME_ZONE 
+| MAX_LOGIN_ATTEMPTS_ALLOWED | Max login attempts | 3 | SITE_ROOT 
+| USERS_ALLOWED_PERMISSIONS | Comma separated string of integers  | 141,143 |  SESSION_TIMEOUT
+| ADMINS_ALLOWED_PERMISSIONS | Comma separated string of integers | 1200 | Users with these permission (defined in the table permission.usr_perm_map) will be allowed to login and use the application and will be given access to the admin functions. 
+| ALLOW_GROUP_PERMISSIONS | Boolean | false | If true, grants permissions to users who belong to a group (defined in permission.grp_perm_map) that has permissions for: USERS_ALLOWED_PERMISSIONS ADMINS_ALLOWED_PERMISSIONS  
+| ADMIN_PERMISSION_REQUIRED_MESSAGE | Text |  | Error message that is displayed if a user attempts to access admin functions without sufficient permissions. 
+| DB_SCHEMA | Text | quick_reports | The name of the database schema that was created during the setup procedure. 
+| PARENT_FOLDER_NAME | Text | Quick Reports | The name of the folder where reports are saved in the original reporting tool. 
+| REPORT_FOLDER_NAME | Text | Reporter.report_folder | The database table that contains the report folder info.  
+| OUTPUT_FOLDER_NAME | Text | Reporter.output_folder | The database table that contains the report output folder info.  
+| ADMIN_SCHEDULED_REPORTS_QUERY_DAYS | Integer | 30 | Number of days in the past to include when an admin gets a list of scheduled reports. Currently running and future reports will always be included.  
+| SHOW_DOC_URL | Boolean | True | For v4 templates, indicates whether to show the DocURL along with the description on the Quick Report Templates page.
+| SHOW_FIELD_DOC | Boolean | True | For v4 templates, indicates whether to show the additional Field Doc information for report filter fields when creating or editing a report.
+| PGSQL_USE_OPENSRF_XML_CONFIG | Boolean | True | If true, obtain PostgreSQL login information from the opensrf config fle. This will be slower but more secure. If false,  define the PostgreSQLl login information explicitly in this config file. 
+| OPENSRF_XML_PATH | Text | /openils/conf/opensrf.xml | This is the file used to obtain config information when either PGSQL_USE_OPENSRF_XML_CONFIG or MEMCACHE_USE_OPENSRF_XML_CONFIG is set to true.
+| PGSQL_HOST | PostgreSQL host |  | Required when PGSQL_USE_OPENSRF_XML_CONFIG is false
+| PGSQL_PORT | PostgreSQL port |  | Required when PGSQL_USE_OPENSRF_XML_CONFIG is false
+| PGSQL_DBNAME | PostgreSQL database name |  | Required when PGSQL_USE_OPENSRF_XML_CONFIG is false
+| PGSQL_USER | PostgreSQL user name |  | Required when PGSQL_USE_OPENSRF_XML_CONFIG is false. Ignored when true. 
+| PGSQL_PASSWORD | PostgreSQL passwrord |  | Required when PGSQL_USE_OPENSRF_XML_CONFIG is false. Ignored when true.  
+| SESSIONS_IN_MEMCACHE | Boolean | True | If true, store session data in memcache. This is required if there is more than one server running this application and sticky sessions are not being implemented by a load balancer to ensure a user always hits the same server.  If false, standard php sessions are used and stored on the local drive of the server. This is best when there is only one server running the application or if there are multiple servers, the load balancer is using sticky sessions to ensure a user always accesses the same server.
+| MEMCACHE_USE_OPENSRF_XML_CONFIG | Boolean | True | If SESSIONS_IN_MEMCACHE is true then this setting determines where to get the memcache configuration information. If true, the memcache configuration is obtained from the opensrf config file specified in OPENSRF_XML_PATH
+| MEMCACHE_PROTOCOL_1 | Protocol | Tcp | Protocol to use to access the primary memcache server.
+| MEMCACHE_PROTOCOL_2 | Protocol | Tcp | Protocol to use to access the secondary memcache server.
+| MEMCACHE_PARAMS_1 | Text | ?persistent=1&weight=2&timeout=2&retry_interval=10 | Parameter string to use when accessing the primary memcache server 
+| MEMCACHE_PARAMS_2 | Text | ?persistent=1&weight=2&timeout=2&retry_interval=10 | Parameter string to use when accessing the secondary memcache server 
+| MEMCACHE_HOST_1 | Primary memcache host name or IP address  |  | Required when MEMCACHE_USE_OPENSRF_XML_CONFIG is false. Ignored when true.  
+| MEMCACHE_HOST_2 | Secondary memcache host name or IP address  |  | Required when MEMCACHE_USE_OPENSRF_XML_CONFIG is false. Ignored when true.  Comment out this setting if there is only one memcache server or set it to the same value as MEMCACHE_HOST_1.   
+| MEMCACHE_PORT_1 | Port to use to access the primary memcache server | 11211 | Required when MEMCACHE_USE_OPENSRF_XML_CONFIG is false. Ignored when true. 
+| MEMCACHE_PORT_2 | Port to use to access the secondary memcache server | 11211 | Required when MEMCACHE_USE_OPENSRF_XML_CONFIG is false. Ignored when true.
+|==================================

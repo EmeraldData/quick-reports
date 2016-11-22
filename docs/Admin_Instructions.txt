@@ -1,0 +1,75 @@
+Quick Reports: Admin Instructions
+=================================
+https://yourdomain.com/report-creator
+
+The Quick Reports Administrator (QR Admin) is responsible for creating and importing select report templates into the Quick Reports add-on for Evergreen. The report templates must be created in the Evergreen Staff Client Reports module as normal, then a link to that template added to Quick Reports.
+
+Permissions
+-----------
+The QR Admin must have the following permissions:
+* ADMIN_SIMPLE_REPORTS
+* CREATE_REPORT_TEMPLATE
+* RUN_REPORTS
+* SHARE_REPORT_FOLDER
+* VIEW_REPORT_OUTPUT
+
+All library staff who will access Quick Reports must have:
+* RUN_REPORTS
+* VIEW_REPORT_OUTPUT
+
+Get Template ID
+---------------
+After a report template is designed and tested, the QR Admin must find the template ID. If he or she does not have direct database access, the ID can be found in the report output’s URL. This URL is available in the email notification that is sent when the report is complete, or can be found in the client:
+
+. View the report output in the staff client.
+. Click Debug.
+. Click Modify URL.
+. You will see a set of three numbers - the first is the Template ID, the second is the Report ID, and the third is the Output ID. You will need the first number for this task.
+
+image::images/report-id.png[Report ID]
+
+Link Templates
+--------------
+. Log into Quick Reports through a web browser: https://yourdomain.com/report-creator/
+. Click on Admin Menu.
+. Click on Link a Template.
+. Enter the Template ID found in the previous section.
+. Click Lookup.
+
+image::images/lookup.png[Import Template]
+
+. In case of error, a message will appear in red on the screen. If successful, the screen will refresh and prompt you for some basic information.
+** Name: Defaults to the template name originally created in the staff client, but you may opt to change it.
+** Description: Optional. Defaults to that created in the staff client.
+** Documentation URL: Optional. Defaults to that created in the staff client.
+** Type: Select either Count (for summed totals of patrons, bills, circulations, etc.) or List (for itemized lists of titles, patrons, etc.)
+** Group: Select a general category (Bills, Circulations, Holds, Items, Patrons).
+** Active: Yes makes it available to library staff, No hides it from library staff.
+. Click Link Template.
+
+[NOTE]
+============================
+Note: Because this has only been extensively tested with PINES reports as of this initial release, you may encounter some types of templates that do not import gracefully. This should be considered an ‘alpha’ release product with expectations that some code may need to be tweaked as additional libraries test it.
+============================
+
+image::images/import-template.png[Import Template]
+
+Manage Templates
+----------------
+If you wish to change a template’s title or category, or hide it from view at a later time, you may do so: 
+
+. In Quick Reports, click on Admin Menu.
+. Click on Manage Templates.
+. Click to expand the Group that the template is in.
+. Locate the template you wish to modify and click Edit Template.
+. Modify, then click Save Template.
+
+Manage Reports
+--------------
+In certain situations, you may need to cancel a recurring report or wish to modify the email address that a recurring report goes to. 
+
+. In Quick Reports, click on Admin Menu.
+. Click on Manage Reports.
+. Click on the Group you are interested in to expand the list.
+. You should see a list of the recurring Quick Reports that have been set up in that Group. You can see who scheduled the recurring report, the name, the recurrence schedule, and the recipient. 
+. Click either Cancel Report or Edit Report.

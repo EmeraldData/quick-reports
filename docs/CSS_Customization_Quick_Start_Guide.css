@@ -1,0 +1,260 @@
+* {}
+html,
+body {
+    height: 100%;
+    font-size: 1.0em;
+    font-family: Arial, Helvetica, Verdana, sans-serif; 	/* default font */
+    background: linear-gradient(#00593d, #007a54);		/* background color scheme */
+    background: -moz-linear-gradient(#00593d, #007a54);
+    background: -o-linear-gradient(#00593d, #007a54);
+    background: -webkit-linear-gradient(#00593d, #007a54);
+    background-color: #007a54;
+}
+#page {
+    padding: 0 10px 0 10px;	/* default page padding */
+}
+#header {
+    height: 100px;	/* header height – make larger than logo height */
+}
+#logo {	/* Logo position */
+    padding-left: 5px;
+    padding-top: 4px;
+}
+#logoImage {
+    background: url(../../opac/images/small_logo.png) no-repeat; /* logo image */
+    border: none;
+    height: 60px;	/* logo height */
+    width: 200px;	/* logo weight */
+    margin: 20px 0 0 0;
+    position: absolute
+}
+#logoText {	/* The text after the logo image */
+    position: absolute;
+    margin: 35px 0 0 210px;
+    color: #fff;
+    font-style: italic;
+    font-family: Georgia, serif;
+    font-size: 16pt;
+}
+#welcome {	/* Welcome text in upper right */
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    color: #fff;
+    font-family: Arial;
+    font-size: 10pt;
+    font-weight: bold;
+}
+#logoutLink {			/* The logout link properties */
+    color: #339966;		/* The logout link color */
+    position: absolute;
+    right: 0px;
+}
+#headerRight {
+    position: absolute;
+    right: 15px
+}
+#headerRight img {
+    margin: 0 1px 0 0;
+}
+#footer {
+    font-family: arial;
+    font-size: 9pt;
+    color: #fff;
+    padding-left: 10px
+}
+#menu {			/* Menu properties */
+    font-size: 11pt;
+    color: #339966;
+    height: 30px;
+}
+.menuItem {
+    color: #339966;		/* Menu text color */
+    font-weight: bold;
+}
+.menuItemSelected {
+    color: #fff;
+    font-weight: bold;
+    background-color: #339966;
+}
+.rightMenuItem {
+    position: absolute;
+    right: 18px
+}
+.menuItemLink:link,
+.menuItemLink:visited,
+.menuItemLink:hover,
+.menuItemLink:active {
+    text-decoration: none
+}
+.adminMenuItem:link,
+.adminMenuItem:visited,
+.adminMenuItem:hover,
+.adminMenuItem:active {
+    font-weight: bold;
+    color: #0066ff;
+    text-decoration: none
+}
+#content {
+    padding: 3px 0 0 10px;
+    min-height: 500px;
+    background-color: #fff
+}
+#content table {
+    border-spacing: 3px;
+    border-collapse: separate;
+}
+#content td {
+    padding: 4px;
+    font-size: 0.9em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    vertical-align: top
+}
+#content input {
+    font-size: 1.0em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+#content textarea {
+    font-size: 1.0em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    width: 98%;
+    min-width: 500px;
+    height: 60px;
+}
+#content select {
+    font-size: 1.0em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.submitButton {
+    color: #fff;
+    background-color: #15513d;
+    height: 30px;
+    border: none;
+    font-family: arial;
+    font-size: 11pt;
+}
+.noPadding {
+    padding: 0px !important;
+}
+.noSpacing {
+    border-spacing: 0px !important;
+}
+.inputName {
+    width: 98%;
+    min-width: 500px;
+}
+.descriptionTextArea {
+    height: 180px !important;
+    width: 900px !important
+}
+.accessibility {
+    color: #fff;
+}
+.defaultTD {
+    background: url(../images/table-tdborder.gif) repeat-x scroll center bottom #fff;
+}
+.defaultLink:link,
+.defaultLink:visited,
+.defaultLink:hover,
+.defaultLink:active {
+    color: #0066ff;
+    text-decoration: none
+}
+.groupLink:link,
+.groupLink:visited,
+.groupLink:hover,
+.groupLink:active {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #0066ff;
+    text-decoration: none
+}
+.homePageLink:link,
+.homePageLink:visited,
+.homePageLink:hover,
+.homePageLink:active {
+    color: #15513d;
+    font-weight: bold;
+    text-decoration: none
+}
+#homePageTitle {
+    color: #15513d;
+    font-weight: bold;
+    font-size: 18pt;
+}
+#adminPageTitle {
+    font-weight: bold;
+}
+.orgunitSelect,
+.userMultiSelect {
+    min-width: 200px;
+    height: 100px;
+}
+.orgunitSelectedDiv,
+.userMultiSelectedDiv {
+    width: 200px;
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: no
+}
+.selectAllLink:link,
+.selectAllLink:visited,
+.selectAllLink:hover,
+.selectAllLink:active {
+    color: #00f;
+    text-decoration: none
+}
+.hideRow {
+    display: none;
+}
+.userText {
+    width: 200px;
+    border: 1px solid #888;
+}
+.userInteger {
+    width: 90px;
+    border: 1px solid #888;
+}
+.userDate {
+    width: 80px;
+}
+#runDate {
+    width: 80px;
+}
+.reportRunning {
+    background-color: #339966;
+    color: #fff
+}
+.reportStatusBar {
+    padding: 0px !important;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    background-color: #bbdd99;
+}
+.errorText {
+    color: #f00;
+}
+.successText {
+    color: #339966;
+}
+.fieldDoc {
+    text-decoration: underline;
+    font-weight: bold;
+}
+.ui-datepicker-trigger {
+    margin-left: 2px;
+    vertical-align: text-bottom;
+}
+.imageBottom {
+    vertical-align: text-bottom;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.maxWidth300 {
+    max-width: 300px;
+}
+.maxWidth500 {
+    max-width: 500px;
+}

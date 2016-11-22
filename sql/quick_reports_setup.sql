@@ -1,3 +1,4 @@
+BEGIN;
 CREATE SCHEMA quick_reports;
 
 CREATE TABLE quick_reports.template_types (
@@ -103,3 +104,4 @@ CREATE TABLE quick_reports.draft_reports (
 	);
 
 INSERT INTO permission.permission_list (id,code,description) VALUES (DEFAULT, 'ADMIN_SIMPLE_REPORTS', 'Necessary for Admin of Quick Reports Add-on');
+COMMIT;

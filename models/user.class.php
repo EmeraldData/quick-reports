@@ -19,7 +19,7 @@ class user extends db
 	function validateUserCredentials($userName, $password) {
 		
 		try {
-			$query = 'select id, home_ou, profile, first_given_name, family_name, email from actor.usr where usrname=:usrname and passwd=md5(:passwd) and active=true';
+			$query = 'select id, home_ou, profile, first_given_name, family_name, email from actor.usr usr where usrname=:usrname and (actor.verify_passwd(usr.id, ''main'', md5((select salt from actor.passwd where usr = usr.id) || md5(:passwd)))) and active=true';
 			$params = array("usrname"=>$userName, "passwd"=>$password);
 			$user = $this->executeQuery($query, $params, QR_QUERY_RETURN_ONE_ROW);
 		}

@@ -1,0 +1,85 @@
+#executiveReport {
+    padding: 5px 0 0 10px;
+}
+#executiveReport table {
+    border-spacing: 0px;
+    border-collapse: separate;
+}
+#executiveReport td {
+    padding: 0px;
+    vertical-align: top;
+}
+#executiveReport input {
+    font-size: 1.0em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+#executiveReport textarea {
+    font-size: 1.0em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    width: 98%;
+    min-width: 500px;
+    height: 60px;
+}
+#executiveReport select {
+    font-size: 1.0em;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.executiveReportMenu {
+    outline-style: solid;
+    outline-color: #15513d;
+    outline-width: 2px;
+    padding: 5px;
+}
+.executiveReportSubMenu {
+    outline-style: solid;
+    outline-color: #999;
+    outline-width: 1px;
+    padding: 0px;
+    width: 260px;
+    padding: 5px 0px 5px 5px;
+}
+.executiveReportSubMenu td {
+    font-size: 1.0em !important;
+}
+.executiveReportSubMenu input {
+    margin-top: 4px;
+    vertical-align: sub
+}
+.executiveReportTopMenu {
+    height: 155px;
+}
+.executiveReportSubMenuRow1 {
+    height: 130px;
+}
+.executiveReportSubMenuRow2 {
+    height: 170px;
+}
+#executiveReportDate {
+    width: 115px;
+    margin: 5px 0 0 25px;
+}
+.executiveReportTypeLink,
+#executiveReportTypeLink:link,
+#executiveReportTypeLink:visited,
+#executiveReportTypeLink:hover,
+#executiveReportDefinitionsLink:active {
+    color: #0066ff;
+    font-size: 9pt;
+    text-decoration: none
+}
+#executiveReportDefinitionsLink,
+#executiveReportDefinitionsLink:link,
+#executiveReportDefinitionsLink:visited,
+#executiveReportDefinitionsLink:hover,
+#executiveReportDefinitionsLink:active {
+    color: #00f;
+    text-decoration: none
+}
+.executiveReportCheckbox {}
+.width10 {
+    width: 10px;
+}
+.width20 {
+    width: 20px;
+}
+

@@ -1,0 +1,68 @@
+* {}
+html, 
+body, 
+td {
+	padding:0; 
+	margin-left: 30px;
+	height: 100%; 
+	background-color:#fff;
+	font-size:11pt; 
+	font-family:Arial, Helvetica, Verdana, sans-serif; 
+}
+
+#logo {
+	background: url(../images/PINESLogo.gif) no-repeat;
+	width:300px; 
+	height:60px; 
+	position:relative;
+}
+
+#subHeaderLeft {
+	min-width:300px;
+}
+
+.contentTable {
+	border-spacing:0px; 
+	border-collapse:collapse;
+}
+
+.contentTable td {
+	border:1px solid #888;
+	padding:0 5px 0 5px; 
+}
+
+.reportHeader {
+	font-weight:bold; 
+	font-size:1.2em
+}
+
+.reportSubHeader {
+	font-weight:normal;
+}
+
+.rowLabel {
+	font-weight:bold;
+	vertical-align:top; 
+	text-align:left;
+}
+
+.columnLabel {
+	font-weight:bold; 
+	vertical-align:top; 
+	text-align:center;
+}
+
+.errorText {
+	color:#f00;
+}
+
+.negativeValue {
+	color:#f00
+}
+
+.zeroValue {}
+
+.zeroValueBackground {
+	background-color:#ccc
+}
+

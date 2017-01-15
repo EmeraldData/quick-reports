@@ -28,6 +28,7 @@ define ('QR_LOGOUT_PAGE', '?logout/');
 define ('QR_SHOW_EXECUTIVE_REPORTS_MENU_PAGE', '?executive/');
 define ('QR_LIST_EXECUTIVE_REPORTS_PAGE', '?executive/reports/');
 define ('QR_CREATE_EXECUTIVE_REPORT_PAGE', 'executiveReport.php?');
+define ('QR_EXECUTIVE_REPORTS_MENU_COLUMNS', 3);
 
 //login
 define ('PINS_LOGOUT_EXPLICIT', 1);

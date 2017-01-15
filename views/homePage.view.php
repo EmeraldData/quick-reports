@@ -22,7 +22,7 @@ class homePageView {
 		<td>&nbsp;</td>
 		<td>
 			<a class="homePageLink" href="<?php echo QR_SITE_ROOT,QR_LIST_REPORTS_PAGE; ?>"><b>My Quick Reports</b></a><br>
-			View reports you have already run, or that you have scheduled.
+			View reports you have already run or that you have scheduled.
 		</td>
 	</tr>
 	<tr>

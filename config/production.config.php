@@ -2,17 +2,30 @@
 //system configs
 define ('QR_ERROR_REPORTING_LEVEL', E_ALL);
 define ('QR_DEFAULT_TIME_ZONE', 'America/New_York');
-define ('QR_SITE_ROOT', '/report-creator-generic/');
 define ('QR_REPORT_OUTPUT_URL_PREFIX', 'https://next.gapines.org/reporter/');
+define ('QR_SITE_ROOT', '/report-creator/');
 //define ('QR_REPORT_OUTPUT_URL_PREFIX', 'https://reports-dev.gapines.org/reporter/');
 define ('QR_REPORT_OUTPUT_URL_SUFFIX', '/report-data.html');
 
 //page headings
 define ('QR_DEFAULT_LOGO_TEXT', 'Quick Reports');
 define ('QR_DEFAULT_TITLE_TAG_TEXT', 'Quick Reports');
-define ('QR_HOME_PAGE_WELCOME_TEXT', 'Welcome to the Quick Reports Tool');
-define ('QR_LOGIN_PAGE_WELCOME_TEXT', 'Welcome to the Quick Reports Tool.');
+define ('QR_HOME_PAGE_WELCOME_TEXT', 'Welcome to the PINES Quick Reports Tool');
+define ('QR_LOGIN_PAGE_WELCOME_TEXT', 'Welcome to the PINES Quick Reports Tool.');
 define ('QR_PAGE_FOOTER_TEXT', '');
+
+//executive reports
+define ('QR_EXECUTIVE_REPORTS_ENABLED', true);
+define ('QR_EXECUTIVE_REPORTS_START_YEAR', '2016');
+define ('QR_EXECUTIVE_REPORTS_ADDITIONAL_ALLOWED_PERMISSIONS', '141,143');
+define ('QR_EXECUTIVE_REPORTS_DESCRIPTION_URL', '');
+define ('QR_EXECUTIVE_REPORTS_TITLE_TAG_TEXT', 'PINES Executive Reports');
+define ('QR_EXECUTIVE_REPORTS_OUTPUT_HEADER_TITLE', 'PINES Executive Reports');
+define ('QR_EXECUTIVE_REPORTS_CONSORTIUM_COLUMN_HEADING', 'PINES');
+define ('QR_EXECUTIVE_REPORTS_ZERO_VALUE', '---');
+define ('QR_EXECUTIVE_REPORTS_TOTAL_KEY', '__total__');
+define ('QR_EXECUTIVE_REPORTS_SUBREPORT_PADDING', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+define ('QR_EXECUTIVE_REPORTS_MISSING_SUBREPORT_LABEL', '*unknown');
 
 //Sessions
 define ('QR_SESSION_TIMEOUT', 120);	//minutes

@@ -265,6 +265,7 @@ class reportController {
 							$defaultValues->paramsDecoded->$field = 'real';
 							$field = $newParamName.'_date';				
 							$defaultValues->paramsDecoded->$field = $dateField[$passes];
+							$defaultValues->paramsDecoded->$field = substr($dateField[$passes],5,2).'/'.substr($dateField[$passes],8,2).'/'.substr($dateField[$passes],0,4);
 						}
 					}
 						

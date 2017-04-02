@@ -41,7 +41,7 @@ echo "This script will not create the required tables in the database."
 echo "Please run sql/quick_reports_setup.sql ONLY if you haven't already."
 
 echo "Copying report-creator files into $OSRF_WEB_ROOT/report-creator."
-rsync -auv --exclude="install*.sh" ./ $OSRF_WEB_ROOT/report-creator/
+rsync -auv --exclude="install*.sh" --exclude=".git" ./ $OSRF_WEB_ROOT/report-creator/
 chown -R opensrf:opensrf $OSRF_WEB_ROOT/report-creator
 
 echo "Now browse to https://www.yourdomain.tld/report-creator to complete setup."

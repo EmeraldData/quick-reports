@@ -18,6 +18,10 @@
 #
 # A script to automate installation of the report-creator feature.
 
+if [ "$(whoami)" != "root" ]; then
+    echo "Must be root to run this script." && exit 1
+fi
+
 APT_TOOL="apt-get"
 OSRF_WEB_ROOT="/openils/var/web"
 

@@ -6,6 +6,7 @@ define ('QR_REPORT_OUTPUT_URL_PREFIX', 'https://next.gapines.org/reporter/');
 define ('QR_SITE_ROOT', '/report-creator/');
 //define ('QR_REPORT_OUTPUT_URL_PREFIX', 'https://reports-dev.gapines.org/reporter/');
 define ('QR_REPORT_OUTPUT_URL_SUFFIX', '/report-data.html');
+define ('QR_REPORT_TRANSFORM_START_YEAR', '2006');
 
 //page headings
 define ('QR_DEFAULT_LOGO_TEXT', 'Quick Reports');

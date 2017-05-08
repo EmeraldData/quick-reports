@@ -17,8 +17,8 @@ class pageView {
 	
 		<link type="text/css" href="css/site_v1.6.css" rel="stylesheet">
 		<?php if (QR_EXECUTIVE_REPORTS_ENABLED)	echo '<link type="text/css" href="css/executiveReportMenu_v1.0.css" rel="stylesheet">'; ?>
-
-		<script type="text/JavaScript" src="lib/site_v1.5.js"></script> 
+		
+		<script type="text/JavaScript" src="lib/site_v1.6.js"></script> 
 	</head>
 	<body>
 	<div id="page">
@@ -94,9 +94,8 @@ class pageView {
 	<div id="footer">
 	<br>  
 	<?php 
-		echo '&copy; 2015-' . date('Y');
-		echo ' Georgia Public Library Service, a Unit of the University System of Georgia.<br/>';
-        echo '1800 Century Place Suite 150, Atlanta, GA 30345-4304 | 404-235-7200', QR_PAGE_FOOTER_TEXT;
+		echo '&#64; 2015-',date('Y');
+		echo 'Georgia Public Library Service, a Unit of the University System of Georgia.<br>', QR_PAGE_FOOTER_TEXT;
 	?>		
 	<br><br>
 	</div>

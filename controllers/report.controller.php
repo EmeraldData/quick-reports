@@ -131,7 +131,7 @@ class reportController {
 	
 	public function editQueuedReport($params) {
 		//edit a queued report using data from reporter.schedule and reporter.report
-	
+		
 		$defaultValues = new stdClass();
 			
 		if (NULL == $params) {
@@ -251,9 +251,8 @@ class reportController {
 				$newParamName = $paramName;
 				
 				do {
-					
 					if (strtolower($param->dataType) == 'timestamp') {
-						$dateField=$defaultValues->paramsDecoded->$paramName;
+						$dateField=$defaultValues->paramsDecoded->$paramName; 					
 						if (isset($dateField[$passes]->transform)) {
 							$field = $newParamName.'_type';
 							$defaultValues->paramsDecoded->$field = 'relative';
@@ -263,19 +262,29 @@ class reportController {
 						else {
 							$field = $newParamName.'_type';
 							$defaultValues->paramsDecoded->$field = 'real';
-							$field = $newParamName.'_date';				
-							$defaultValues->paramsDecoded->$field = $dateField[$passes];
-							$defaultValues->paramsDecoded->$field = substr($dateField[$passes],5,2).'/'.substr($dateField[$passes],8,2).'/'.substr($dateField[$passes],0,4);
+							
+							switch (strtolower($param->transform)) {
+								case 'date':	
+									$field = $newParamName.'_date';				
+									$defaultValues->paramsDecoded->$field = substr($dateField[$passes],5,2).'/'.substr($dateField[$passes],8,2).'/'.substr($dateField[$passes],0,4);
+								break;
+								case 'month_trunc':
+									$field = $newParamName.'_date_year';
+									$defaultValues->paramsDecoded->$field = substr($dateField[$passes],0,4);
+									$field = $newParamName.'_date_month';
+									$defaultValues->paramsDecoded->$field = substr($dateField[$passes],5,2);
+								break;
+								case 'year_trunc':
+									$field = $newParamName.'_date_year';
+									$defaultValues->paramsDecoded->$field = substr($dateField[$passes],0,4);
+								break;
+							}	
 						}
 					}
 						
-					if (strtolower($param->op) != 'between') break; 	//op is not 'between' so no second pass needed
-					
-					//set up the range.
-					$newParamName.='_end';
-					
+					$newParamName.='_end';		//set up for a range.		
 				}
-				while (++$passes < 2);
+				while (++$passes < 2 && strtolower($param->op) == 'between');
 				
 				if (strtolower($param->dataType) == 'timestamp') unset($defaultValues->paramsDecoded->$unsetName);
 			}

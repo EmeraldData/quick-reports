@@ -313,95 +313,98 @@ class reportView extends baseReportView {
 
 	private function parseColumns($param) {
 	
-		$p = $param;
-		if (is_array($p->param)) $p->param = implode(',', $p->param);	//if array convert it back to a string
+		if (is_array($param->param)) $param->param = implode(',', $param->param);	//if array convert it back to a string
 
-		$userParam = (substr($p->param,0,3) == '::P');					//user entered field or static
-		$lowerOp = strtolower($p->op);
-		$lowerParam = strtolower($p->param);
-		$lowerOpLabel = strtolower($p->opLabel);
-		$lowerDataType = strtolower($p->dataType);
-		$lowerTransform = strtolower($p->transform);
+		$userParam = (substr($param->param,0,3) == '::P');					//user entered field or static
+		$lowerOp = strtolower($param->op);
+		$lowerParam = strtolower($param->param);
+		$lowerOpLabel = strtolower($param->opLabel);
+		$lowerDataType = strtolower($param->dataType);
+		$lowerTransform = strtolower($param->transform);
 	
 		switch ($lowerOp) {
 			case '=':
-				$p->opLabel='Equals';
+				$param->opLabel='Equals';
 				break;
 			case 'between':
-				$p->opLabel='Between';
+				$param->opLabel='Between';
 				break;
 			case '<':
 				if ($lowerDataType == 'timestamp')
-					$p->opLabel='Before';
+					$param->opLabel='Before';
 				else
-					$p->opLabel='Less than';
+					$param->opLabel='Less than';
 				break;
 			case '<=':
 				if ($lowerDataType == 'timestamp')
-					$p->opLabel='On or before';
+					$param->opLabel='On or before';
 				else
-					$p->opLabel='Less than or equal to';
+					$param->opLabel='Less than or equal to';
 				break;				
 			case '>':
 				if ($lowerDataType == 'timestamp')
-					$p->opLabel='After';
+					$param->opLabel='After';
 				else
-					$p->opLabel='Greater than';
+					$param->opLabel='Greater than';
 				break;
 			case '>=':
 				if ($lowerDataType == 'timestamp')
-					$p->opLabel='On or after';
+					$param->opLabel='On or after';
 				else
-					$p->opLabel='Greater than or equal to';
+					$param->opLabel='Greater than or equal to';
+				break;
+			case 'ilike':
+				$param->opLabel='Substring Match<br>(ignore case)';
+				break;
+			case 'like':
+				$param->opLabel='Substring Match<br>(case sensitive)';
 				break;
 			case 'in':
-				$p->opLabel='In List';
+				$param->opLabel='In List';
 				break;
 			case 'not in':
-				$p->opLabel='Not In List';
+				$param->opLabel='Not In List';
 				break;			
 			case 'is':
-				if (!$userParam && $lowerOpLabel == 'is null') {
-					$param->param = 'Null';
-				}
-				$p->opLabel='Is';
+				if (!$userParam && $lowerOpLabel == 'is null') $param->param = 'Null';	//set displayed value
+				$param->opLabel='Is';
 				break;
 			case 'is not':
-				if (!$userParam && $lowerOpLabel == 'is not null') {
-					$param->param = 'Null';
-				}
-				$p->opLabel='Is Not';
+				if (!$userParam && $lowerOpLabel == 'is not null') $param->param = 'Null';	//set displayed value
+				$param->opLabel='Is Not';
 				break;
 			default:
-				$p->opLabel='unknown action -'.$param->op;
+				//Use opLabel - do not show error message
+				if (substr($lowerOpLabel,0,3) == 'is ') {
+					$param->param = substr($param->opLabel,3);	//set displayed value
+					$param->opLabel='Is';					
+				}	
 				break;
 		}
 	
 		switch ($lowerTransform) {
 			case 'bare':
-				$p->transformLabel = NULL;
+				$param->transformLabel = NULL;
 				break;
 			case 'date':
-				$p->transformLabel = NULL;
+				$param->transformLabel = NULL;
 				break;
 		}
 	
 		if (!$userParam && $lowerDataType == 'bool') {
-			if ($lowerOp == '=') $p->opLabel='Is';
+			if ($lowerOp == '=') $param->opLabel='Is';
 			if ($lowerParam == 't') {
-				$p->param = 'True';
+				$param->param = 'True';
 			}
 			else {	
-				$p->param = 'False';
+				$param->param = 'False';
 			}
 		}
 	
-		if ($userParam) {
-			//generate user input fields
-			$p->param = $this->generateUserInputFields($param);
-		}
+		//generate user input fields
+		if ($userParam) $param->param = $this->generateUserInputFields($param);
 	
-		return $p;
+		return $param;
 	}
 	
 	private function generateUserInputFields($param) {
@@ -444,22 +447,75 @@ class reportView extends baseReportView {
 					case 'timestamp':
 						$paramNameDate = $paramName.'_type';	//::Px_type - relative or real
 						$dateType = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'real');
-						$cell .= '<span class="nowrap"><select name="'.$paramName.'_type" id="'.$paramName.'_type" onchange=\'toggleRealRelativeDate(this,"'.$paramName.'_calendar_span","'.$paramName.'_days_span");\'>';
+						$cell .= '<span class="nowrap"><select name="'.$paramName.'_type" id="'.$paramName.'_type" onchange=\'toggleRealRelativeDate(this,"'.$paramName.'_calendar_span","'.$paramName.'_period_span");\'>';
 						$cell .= '<option '.(($dateType=='real')?' selected ':'').'value="real">Real Date</option><option '.(($dateType=='relative')?' selected ':'').'value="relative">Relative Date</option></select>&nbsp;';
 						
-						$paramNameDate = $paramName.'_date';	//::Px_date value
-						$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'');
-						$cell .= '<span id="'.$paramName.'_calendar_span" '.(($dateType=='relative')?' style="display:none;"':'').'>
-						<input class="userDate userInput hasDatePicker" name="'.$paramName.'_date" id="'.$paramName.'_date" type="text" size="6" maxlength="10" value="'.$value.'"></span>
-						<script>
-						$(function() {$( "#'.$paramName.'_date" ).datepicker({});});
-						</script>';
+						switch ($lowerTransform) {
+							case 'date':
+								$paramNameDate = $paramName.'_date';	//::Px_date value
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'');
+								$cell .= '<span id="'.$paramName.'_calendar_span" '.(($dateType=='relative')?' style="display:none;"':'').'>
+								<input class="userDate userInput hasDatePicker" name="'.$paramName.'_date" id="'.$paramName.'_date" type="text" size="6" maxlength="10" value="'.$value.'"></span>
+								<script>
+								$(function() {$( "#'.$paramName.'_date" ).datepicker({});});
+								</script>';
+										
+								$paramNameDate = $paramName.'_relative_value';	//::Px_relative_value (days)
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'');								
+								$cell .= '<span id="'.$paramName.'_period_span" '.(($dateType=='real')?' style="display:none;"':'').'><select name="'.$paramName.'_relative_value" id="'.$paramName.'_relative_value" class="userInput" onchange="javascript:setDaysLabel(this, \''.$paramName.'_days_label\');">';
+								for ($i = 1; $i <=90; $i++) $cell.='<option '.(($value == -$i)?' selected ':'').'value="-'.$i.'">'.$i.'</option>';
+								$cell .= '</select> <span id="'.$paramName.'_days_label">Day'.(($value==-1)?'':'s').'</span> ago</span></span>';
+							break;
+							
+							case 'month_trunc':
+								$paramNameDate = $paramName.'_date_month';	//::Px_date_month value
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:date('m'));
+								$cell .= '<span id="'.$paramName.'_calendar_span" '.(($dateType=='relative')?' style="display:none;"':'').'>
+								<select name="'.$paramName.'_date_month" id="'.$paramName.'_date_month" type="text" class="userInput">';
+								$cell.='<option '.(($value == '01')?' selected ':'').'value="01">Jan</option>';
+								$cell.='<option '.(($value == '02')?' selected ':'').'value="02">Feb</option>';
+								$cell.='<option '.(($value == '03')?' selected ':'').'value="03">Mar</option>';
+								$cell.='<option '.(($value == '04')?' selected ':'').'value="04">Apr</option>';
+								$cell.='<option '.(($value == '05')?' selected ':'').'value="05">May</option>';
+								$cell.='<option '.(($value == '06')?' selected ':'').'value="06">Jun</option>';
+								$cell.='<option '.(($value == '07')?' selected ':'').'value="07">Jul</option>';
+								$cell.='<option '.(($value == '08')?' selected ':'').'value="08">Aug</option>';
+								$cell.='<option '.(($value == '09')?' selected ':'').'value="09">Sep</option>';
+								$cell.='<option '.(($value == '10')?' selected ':'').'value="10">Oct</option>';
+								$cell.='<option '.(($value == '11')?' selected ':'').'value="11">Nov</option>';
+								$cell.='<option '.(($value == '12')?' selected ':'').'value="12">Dec</option>';
+								$cell .= '</select>&nbsp;';
+								
+								$paramNameDate = $paramName.'_date_year';	//::Px_date_year value
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:date('Y'));
+								$cell .= '<select name="'.$paramName.'_date_year" id="'.$paramName.'_date_year" type="text" class="userInput">';
+								for ($i = QR_REPORT_TRANSFORM_START_YEAR; $i <= date('Y'); $i++) $cell.='<option '.(($value == $i)?' selected ':'').'value="'.$i.'">'.$i.'</option>';
+								$cell .= '</select></span>';
+								
+								//setup realtive values
+								$paramNameDate = $paramName.'_relative_value';	//::Px_relative_value (months)
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'');
+								$cell .= '<span id="'.$paramName.'_period_span" '.(($dateType=='real')?' style="display:none;"':'').'><select name="'.$paramName.'_relative_value" id="'.$paramName.'_relative_value" class="userInput" onchange="javascript:setMonthsLabel(this, \''.$paramName.'_months_label\');">';
+								for ($i = 1; $i <=48; $i++) $cell.='<option '.(($value == -$i)?' selected ':'').'value="-'.$i.'">'.$i.'</option>';
+								$cell .= '</select> <span id="'.$paramName.'_months_label">Month'.(($value==-1)?'':'s').'</span> ago</span></span>';
+							break;
+								
+							case 'year_trunc':								
+								$paramNameDate = $paramName.'_date_year';	//::Px_date_year value
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:date('Y'));
+								$cell .= '<span id="'.$paramName.'_calendar_span" '.(($dateType=='relative')?' style="display:none;"':'').'>
+								<select name="'.$paramName.'_date_year" id="'.$paramName.'_date_year" type="text" class="userInput">';
+								for ($i = QR_REPORT_TRANSFORM_START_YEAR; $i <= date('Y'); $i++) $cell.='<option '.(($value == $i)?' selected ':'').'value="'.$i.'">'.$i.'</option>';
+								$cell .= '</select></span>';
 
-						$paramNameDate = $paramName.'_relative_value';	//::Px_relative_value
-						$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'');
-						$cell .= '<span id="'.$paramName.'_days_span" '.(($dateType=='real')?' style="display:none;"':'').'><select name="'.$paramName.'_relative_value" id="'.$paramName.'_relative_value" class="userInput" onchange="javascript:setDaysLabel(this, \''.$paramName.'_days_label\');">';
-						for ($i = 1; $i <=90; $i++) $cell.='<option '.(($value == $i)?' selected ':'').'value="-'.$i.'">'.$i.'</option>';
-						$cell .= '</select> <span id="'.$paramName.'_days_label">Day</span> ago</span></span>';
+								//setup realtive values
+								$paramNameDate = $paramName.'_relative_value';	//::Px_relative_value (years)
+								$value = (isset($this->defaultValues->paramsDecoded->$paramNameDate)?$this->defaultValues->paramsDecoded->$paramNameDate:'');
+								$cell .= '<span id="'.$paramName.'_period_span" '.(($dateType=='real')?' style="display:none;"':'').'><select name="'.$paramName.'_relative_value" id="'.$paramName.'_relative_value" class="userInput" onchange="javascript:setYearsLabel(this, \''.$paramName.'_years_label\');">';
+								for ($i = 1; $i <=10; $i++) $cell.='<option '.(($value == -$i)?' selected ':'').'value="-'.$i.'">'.$i.'</option>';
+								$cell .= '</select> <span id="'.$paramName.'_years_label">Year'.(($value==-1)?'':'s').'</span> ago</span></span>';
+							break;	
+						}	
 						break;
 	
 					case 'text':

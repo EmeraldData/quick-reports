@@ -199,14 +199,15 @@ class scheduleController {
 				$lowerDataType = strtolower($userParam->dataType);
 				$lowerTransform = strtolower($userParam->transform);
 					
-				if ($lowerTransform == 'date') {
+				if ($lowerTransform == 'date' || $lowerTransform == 'month_trunc' || $lowerTransform == 'year_trunc') {
 					//process date field
 	
 					$range=false;
 					$paramsOK = true;
-					$paramsErrorMessage = NULL;
 					$dateParamString=NULL;
 					$dateEndParamString=NULL;
+					$paramsErrorMessage = NULL;
+					$lowerTransformLabel=str_replace('_trunc', '', $lowerTransform);
 					
 					if (!isset($_POST[$paramName.'_type'])) {
 						$paramsOK = false;
@@ -216,28 +217,58 @@ class scheduleController {
 					if ($_POST[$paramName.'_type'] == 'relative') {
 						if (!isset($_POST[$paramName.'_relative_value'])) {
 							$paramsOK = false;
-							$paramsErrorMessage = "Missing date parameter $paramName";
+							$paramsErrorMessage = "Missing relative date value $paramName";
 							break;
 						}
-						$dateParam['transform'] = 'relative_'.$lowerTransform;
+						$dateParam['transform'] = 'relative_'.$lowerTransformLabel;
 						$dateParam['params'] =  (array)$_POST[$paramName.'_relative_value'];
 					}
 					else {
-						if (!isset($_POST[$paramName.'_date'])) {
-							$paramsOK = false;
-							$paramsErrorMessage = "Missing date parameter $paramName";
+						switch ($lowerTransform) {
+							case 'date':		
+								if (!isset($_POST[$paramName.'_date'])) {
+									$paramsOK = false;
+									$paramsErrorMessage = "Missing date value $paramName";
+									break;
+								}
+								$dateParamString = $this->convertDateFormat($_POST[$paramName.'_date']);
+								if (NULL == $dateParamString) {
+									$paramsOK = false;
+									$paramsErrorMessage = 'Date is not valid.';
+								}
 							break;
-						}
-						$dateParamString = $this->convertDateFormat($_POST[$paramName.'_date']);
-						if (NULL == $dateParamString) {
-							$paramsOK = false;
-							$paramsErrorMessage = 'Date is not valid.';
+							
+							case 'month_trunc':
+								if (!isset($_POST[$paramName.'_date_month']) || !isset($_POST[$paramName.'_date_year'])) {
+									$paramsOK = false;
+									$paramsErrorMessage = "Missing date year+month value $paramName";
+									break;
+								}
+								$dateParamString = $_POST[$paramName.'_date_year'].'-'.$_POST[$paramName.'_date_month'];
+								if (NULL == $dateParamString) {
+									$paramsOK = false;
+									$paramsErrorMessage = 'Year+Month is not valid.';
+								}
+							break;
+
+							case 'year_trunc':
+								if (!isset($_POST[$paramName.'_date_year'])) {
+									$paramsOK = false;
+									$paramsErrorMessage = "Missing date year value $paramName";
+									break;
+								}
+								$dateParamString = $_POST[$paramName.'_date_year'];
+								if (NULL == $dateParamString) {
+									$paramsOK = false;
+									$paramsErrorMessage = 'Year is not valid.';
+								}
+							break;
 						}
 					}
 				
 					if ($lowerOp == 'between') {
 					 	//process between range		
-	
+
 						$range = true;	
 						if (!isset($_POST[$paramName.'_end_type'])) {
 							$paramsOK = false;
@@ -251,7 +282,7 @@ class scheduleController {
 								break;
 							}
 							$dateEndParam['transform'] = 'relative_'.$userParam->transform;
-							$dateEndParam['params'] =  (array)$_POST[$paramName.'_end_relative_value'];
+							$dateEndParam['params'] =  (array)$_POST[$paramName.'_end_relative_value'];							
 						}
 						else {
 							if (!isset($_POST[$paramName.'_end_date'])) {
@@ -266,6 +297,8 @@ class scheduleController {
 							}
 						}		
 					}
+					
+					
 					
 					if (NULL != $dateParamString)
 						$startDate = $dateParamString;		//real date string
@@ -309,7 +342,7 @@ class scheduleController {
 							
 			}
 		}
-		
+
 		if (isset($_POST['pivotLabelColumn']) && isset($_POST['pivotDataColumn'])) {
 			$userParams['__pivot_label'] = $_POST['pivotLabelColumn'];
 			$userParams['__pivot_data'] = $_POST['pivotDataColumn'];
@@ -318,6 +351,7 @@ class scheduleController {
 		if ($paramsOK) {
 			$reportParams = new stdClass();
 			$reportParams->data = json_encode($userParams);
+
 			if (NULL == $reportParams->data) {
 				new displayMessageView('JSON format error encoding report data.');
 				exit;
@@ -344,7 +378,7 @@ class scheduleController {
 									
 			$scheduleObj = new schedule();
 			$result = $scheduleObj->submitReport($reportParams, $scheduleParams, $updateIDs);
-			
+	
 			if ($result->success) {
 				if (NULL == $updateIDs)
 					new displayMessageView('The report was sent to the scheduler.', true);

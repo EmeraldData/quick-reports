@@ -22,14 +22,29 @@ if [ "$(whoami)" != "root" ]; then
     echo "Must be root to run this script." && exit 1
 fi
 
-APT_TOOL="apt-get"
+DISTRO="lsb_release -i | awk '{print $3}'"
+RELEASE="lsb_release -r | awk '{print $2}'"
 OSRF_WEB_ROOT="/openils/var/web"
+if [ "$DISTRO" == "Ubuntu" ]; then
+	if [ "$RELEASE" == "16.04" ]; then
+		APT_TOOL="apt"
+		PREREQS="php7.0 php7.0-gd php7.0-pgsql php-memcache php-pear"
+		APACHE_RESTART="systemctl restart apache2.service"
+	else
+		APT_TOOL="apt-get"
+		PREREQS="php5 php5-gd php5-pgsql php5-memcache php-pear"
+		APACHE_RESTART="service apache2 restart"
+	fi
+else
+	echo "You do not appear to be running Ubuntu.  Please install manually."
+	exit 1
+fi
 
 # install prerequisites
-$APT_TOOL install php5 php5-gd php5-pgsql php5-memcache php-pear
+$APT_TOOL install -y $PREREQS
 
 # restart apache to activate PHP
-service apache2 restart
+$APACHE_RESTART
 
 # create the report-creator directory
 mkdir $OSRF_WEB_ROOT/report-creator

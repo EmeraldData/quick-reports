@@ -22,8 +22,8 @@ if [ "$(whoami)" != "root" ]; then
     echo "Must be root to run this script." && exit 1
 fi
 
-DISTRO="lsb_release -i | awk '{print $3}'"
-RELEASE="lsb_release -r | awk '{print $2}'"
+DISTRO="$(lsb_release -i | awk '{print $3}')"
+RELEASE="$(lsb_release -r | awk '{print $2}')"
 OSRF_WEB_ROOT="/openils/var/web"
 if [ "$DISTRO" == "Ubuntu" ]; then
 	if [ "$RELEASE" == "16.04" ]; then

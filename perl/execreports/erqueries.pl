@@ -615,7 +615,8 @@ FROM 	action.hold_transit_copy
 		JOIN actor.org_unit r on (r.id = action.hold_transit_copy.dest) 
 		JOIN actor.org_unit p on (r.parent_ou = p.id) 
 WHERE 	s.id in (SELECT id from actor.org_unit WHERE ou_type=3)
-		AND s.parent_ou <> r.parent_ou 
+		AND s.parent_ou <> r.parent_ou
+        AND p.id <> 1
 		AND source_send_time BETWEEN '$start_date' AND '$end_date'
 GROUP BY r.id
 )

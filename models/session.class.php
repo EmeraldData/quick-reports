@@ -35,6 +35,13 @@ class session {
 			$verID='3fca9f8aa945f04e090b258b2fcf10e4';
 			$sessionName = session_name(); 
 			$this->sessionCookieExists = isset($_COOKIE[$sessionName]) ? true : false;
+
+			if (substr(phpversion(), 0, 1) == '7') {
+			    //PHP7 workaround for memcache
+			    include 'memcacheSession.class.php';
+			    $mcSession = new MemcachedSession();
+			    session_set_save_handler($mcSession, true);
+			}
 			
 			@session_start();
 			restore_error_handler();

@@ -22,14 +22,17 @@ if [ "$(whoami)" != "root" ]; then
     echo "Must be root to run this script." && exit 1
 fi
 
+PPA="ppa:ondrej/php"
 DISTRO="$(lsb_release -i | awk '{print $3}')"
 RELEASE="$(lsb_release -r | awk '{print $2}')"
 OSRF_WEB_ROOT="/openils/var/web"
 if [ "$DISTRO" == "Ubuntu" ]; then
 	if [ "$RELEASE" == "16.04" ]; then
 		APT_TOOL="apt"
-		PREREQS="php7.0 php7.0-gd php7.0-pgsql php-memcache php-pear"
+		PREREQS="php7.0 php7.0-gd php7.0-pgsql php7.0-xml php7.0-dev php-memcache php-pear"
 		APACHE_RESTART="systemctl restart apache2.service"
+        add-apt-repository -y $PPA
+        $APT_TOOL update
 	else
 		APT_TOOL="apt-get"
 		PREREQS="php5 php5-gd php5-pgsql php5-memcache php-pear"

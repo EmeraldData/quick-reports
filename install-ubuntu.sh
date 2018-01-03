@@ -29,7 +29,7 @@ OSRF_WEB_ROOT="/openils/var/web"
 if [ "$DISTRO" == "Ubuntu" ]; then
 	if [ "$RELEASE" == "16.04" ]; then
 		APT_TOOL="apt"
-		PREREQS="php7.0 php7.0-gd php7.0-pgsql php7.0-xml php7.0-dev php-memcache php-peari libapache2-mod-php7.0"
+		PREREQS="php7.0 php7.0-gd php7.0-pgsql php7.0-xml php7.0-dev php-memcache php-pear libapache2-mod-php7.0"
 		APACHE_RESTART="systemctl restart apache2.service"
         add-apt-repository -y $PPA
         $APT_TOOL update

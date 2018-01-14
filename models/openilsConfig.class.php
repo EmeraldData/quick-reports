@@ -11,11 +11,11 @@ class openilsConfig {
 		}
 		
 		if (QR_PGSQL_USE_OPENSRF_XML_CONFIG) {		
-			define ('QR_PGSQL_HOST', $xml->default->reporter->setup->database->host);
-			define ('QR_PGSQL_PORT', $xml->default->reporter->setup->database->port);
-			define ('QR_PGSQL_DBNAME', $xml->default->reporter->setup->database->db);
-			define ('QR_PGSQL_USER', $xml->default->reporter->setup->database->user);
-			define ('QR_PGSQL_PASSWORD', $xml->default->reporter->setup->database->pw);
+			define ('QR_PGSQL_HOST', $xml->default->reporter->setup->state_store->host);
+			define ('QR_PGSQL_PORT', $xml->default->reporter->setup->state_store->port);
+			define ('QR_PGSQL_DBNAME', $xml->default->reporter->setup->state_store->db);
+			define ('QR_PGSQL_USER', $xml->default->reporter->setup->state_store->user);
+			define ('QR_PGSQL_PASSWORD', $xml->default->reporter->setup->state_store->pw);
 		}
 
 		if (QR_MEMCACHE_USE_OPENSRF_XML_CONFIG) {

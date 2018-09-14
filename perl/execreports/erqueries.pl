@@ -235,15 +235,19 @@ c3 => <<"SQL",
 INSERT INTO $collection_table
 (time_stamp, year_month, report, sub_report, org_unit, data)
 (
-SELECT	now(), $year_month, 'C3', asset.copy.circ_as_type, actor.org_unit.id, COUNT(action.circulation.id) 
-FROM	action.circulation 
-		INNER JOIN actor.org_unit ON action.circulation.circ_lib = actor.org_unit.id
-		INNER JOIN asset.copy ON action.circulation.target_copy = asset.copy.id
-WHERE	actor.org_unit.id in (SELECT id from actor.org_unit WHERE ou_type=3)
-		AND date(action.circulation.xact_start) BETWEEN '$start_date' AND '$end_date'
-GROUP BY actor.org_unit.id, asset.copy.circ_as_type
+SELECT  now(), $year_month, 'C3', metabib.record_attr_flat.value, actor.org_unit.id, COUNT(action.circulation.id)        
+FROM    action.circulation 
+        INNER JOIN actor.org_unit ON action.circulation.circ_lib = actor.org_unit.id
+        INNER JOIN asset.copy ON action.circulation.target_copy = asset.copy.id
+        INNER JOIN asset.call_number ON (asset.copy.call_number = asset.call_number.id)
+        INNER JOIN metabib.record_attr_flat ON (asset.call_number.record = metabib.record_attr_flat.id AND metabib.record_attr_flat.attr = 'item_type')
+WHERE   actor.org_unit.id in (SELECT id from actor.org_unit WHERE ou_type=3)
+        AND date(action.circulation.xact_start) BETWEEN '$start_date' AND '$end_date'
+GROUP BY actor.org_unit.id, metabib.record_attr_flat.value
 )
 SQL
+
+
 
 c3systems => <<"SQL",
 INSERT INTO $collection_table

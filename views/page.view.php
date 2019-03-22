@@ -95,7 +95,7 @@ class pageView {
 	<br>  
 	<?php 
 		echo '&#64; 2015-',date('Y');
-		echo 'Georgia Public Library Service, a Unit of the University System of Georgia.<br>', QR_PAGE_FOOTER_TEXT;
+		echo ' Georgia Public Library Service, a Unit of the University System of Georgia.<br>', QR_PAGE_FOOTER_TEXT;
 	?>		
 	<br><br>
 	</div>

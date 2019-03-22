@@ -11,8 +11,8 @@ define ('QR_REPORT_TRANSFORM_START_YEAR', '2006');
 //page headings
 define ('QR_DEFAULT_LOGO_TEXT', 'Quick Reports');
 define ('QR_DEFAULT_TITLE_TAG_TEXT', 'Quick Reports');
-define ('QR_HOME_PAGE_WELCOME_TEXT', 'Welcome to the PINES Quick Reports Tool');
-define ('QR_LOGIN_PAGE_WELCOME_TEXT', 'Welcome to the PINES Quick Reports Tool.');
+define ('QR_HOME_PAGE_WELCOME_TEXT', 'Welcome to the Evergreen Quick Reports Tool');
+define ('QR_LOGIN_PAGE_WELCOME_TEXT', 'Welcome to the Evergreen Quick Reports Tool.');
 define ('QR_PAGE_FOOTER_TEXT', '');
 
 //executive reports

@@ -34,6 +34,15 @@ CREATE TABLE quick_reports.template_groups (
 	);
 
 INSERT INTO quick_reports.template_groups (
+        NAME
+	,display_order
+	)
+VALUES (
+	'Acquisitions'
+	,5
+	);
+
+INSERT INTO quick_reports.template_groups (
 	NAME
 	,display_order
 	)

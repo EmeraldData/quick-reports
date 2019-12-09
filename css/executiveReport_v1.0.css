@@ -11,7 +11,7 @@ td {
 }
 
 #logo {
-	background: url(../images/PINESLogo.gif) no-repeat;
+	background: url(/report-creator/images/pines-logo-small.png) no-repeat;
 	width:300px; 
 	height:60px; 
 	position:relative;

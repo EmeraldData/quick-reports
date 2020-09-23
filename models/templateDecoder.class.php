@@ -110,7 +110,11 @@ class templateDecoder
 						if ( isset( $P ) ) {
 							list($key, $opValue) = each($P);  //get the first (and only) value
 						}
-						if (is_array($opValue)) $opValue = implode(',', $opValue);	//if array convert it back to a string
+						if ( isset( $opValue ) ) {
+							if (is_array($opValue)) $opValue = implode(',', $opValue);	//if array convert it back to a string
+						} else {
+							$opValue = null;
+						}
 
 						$paramsArray = array(
 							'column' => $columnLabel

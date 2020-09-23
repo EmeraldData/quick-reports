@@ -89,7 +89,7 @@ class templateDecoder
 						$opLabel = "";
 						$fieldDoc = "";
 						$aggregate = "";
-						foreach ( $data->filter_cols as $fc ) {
+						foreach ( $jsonData->filter_cols as $fc ) {
 							if ( $fc->name === $colName ) {
 								$dataType = $fc->datatype;
 								$op = $fc->operator->op;

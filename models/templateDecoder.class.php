@@ -74,7 +74,7 @@ class templateDecoder
 					}
 
 					foreach ( $clause as $cl ) {
-						$relation = $cl->relation;
+						$relation = isset($cl->relation) ? $cl->relation : null;
 						$colName = $cl->column->colname;
 
 						$columnLabel = "";

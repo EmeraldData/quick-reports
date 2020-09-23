@@ -301,10 +301,14 @@ class templateDecoder
 			$out = $d->$val;
 			return;
 		} else {
-			if ( $d->$subtag ) {
-				foreach ( $d->$subtag as $j ) {
-					$this->pullLabel( $j, $str, $out, $tag, $subtag, $val );
+			if ( isset( $d->$subtag ) ) {
+				if ( $d->$subtag ) {
+					foreach ( $d->$subtag as $j ) {
+						$this->pullLabel( $j, $str, $out, $tag, $subtag, $val );
+					}
 				}
+			} else {
+				return;
 			}
 		}
 	}

@@ -75,10 +75,10 @@ class templateDecoder
 
 					foreach ( $clause as $cl ) {
 						$relation = isset($cl->relation) ? $cl->relation : null;
-						$colName = $cl->column->colname;
+						$colName = isset($cl->column->colname) ? $cl->column->colname : null;
 
 						$columnLabel = "";
-						pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
+						$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
 						$columnLabel = str_replace( '::', '->', $columnLabel);
 
 						$transform = $cl->column->transform;

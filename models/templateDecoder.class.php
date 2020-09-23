@@ -74,14 +74,14 @@ class templateDecoder
 					}
 
 					foreach ( $clause as $cl ) {
-						$relation = isset($cl->relation) ? $cl->relation : null;
-						$colName = isset($cl->column->colname) ? $cl->column->colname : null;
+						$relation = isset( $cl->relation ) ? $cl->relation : null;
+						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
 						$columnLabel = "";
 						$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
 						$columnLabel = str_replace( '::', '->', $columnLabel);
 
-						$transform = $cl->column->transform;
+						$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
 						$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
 
 						$dataType = "";
@@ -104,7 +104,7 @@ class templateDecoder
 							}
 						}
 						$tableName = "";
-						pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
+						$this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
 						$P = $cl->condition;
 
 						list($key, $opValue) = each($P);  //get the first (and only) value

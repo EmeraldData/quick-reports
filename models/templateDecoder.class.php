@@ -291,13 +291,13 @@ class templateDecoder
 	}
 
 	function pullLabel ( $d, $str, &$out, $tag, $subtag, $val ) {
-		if ( $d->$tag == str ) {
+		if ( $d->$tag == $str ) {
 			$out = $d->$val;
 			return;
 		} else {
 			if ( $d->$subtag ) {
 				foreach ( $d->$subtag as $j ) {
-					pullLabel( $j, $str, $out, $tag, $subtag, $val );
+					$this->pullLabel( $j, $str, $out, $tag, $subtag, $val );
 				}
 			}
 		}

@@ -158,7 +158,7 @@ class templateController {
 					else {	//display the template form
 						$typeListData = $templateObj->getTemplateTypesList();
 						$groupListData = $templateObj->getTemplategroupsList();
-						$template->doc_url=json_decode($template->dataDecoded)->docURL;
+						isset($template->doc_url) ? $template->doc_url=json_decode($template->dataDecoded)->docURL : false;
 						$templateView->displayTemplateInfoForm($template, $typeListData, $groupListData);
 					}		
 				}

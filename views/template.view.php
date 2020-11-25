@@ -108,7 +108,7 @@ class templateView {
 		<tr><td></td><td>Created by <?php echo ($template->usrname)==''?'id# '.$template->owner:$template->usrname, ' on ', date('m/d/Y \a\t h:i:s A', strtotime($template->create_time)); ?></td></tr>
 		<tr><td>Name:</td><td><input class="inputName" name="templateName" id="templateName" type="text" maxlength="100" value="<?php echo $template->name; ?>"></td></tr>
 		<tr><td>Description:</td><td><Textarea class="descriptionTextArea" name="description" id="description"><?php echo $template->description; ?></Textarea></td></tr>
-		<tr><td>Documentation URL:</td><td><input class="inputName" name="docURL" id="docURL" type="text" maxlength="100" value="<?php echo $template->doc_url; ?>"></td></tr>
+		<tr><td>Documentation URL:</td><td><input class="inputName" name="docURL" id="docURL" type="text" maxlength="100" value="<?php echo isset( $template->docURL) ? $template->docURL : ""; ?>"></td></tr>
 		<tr><td>Type:</td><td><?php echo $this->createSimpleSelectFromObject($typeListData, 'typeList', $typeListSelected); ?></td></tr>
 		<tr><td>Group:</td><td><?php echo $this->createSimpleSelectFromObject($groupListData, 'groupList', $groupListSelected); ?></td></tr>
 		<tr><td>Active:</td><td><select name="active" id="active"><option value="1" <?php echo (isset($template->active) && $template->active==1)?' selected ':'';?>>Yes</option><option value="0" <?php echo (isset($template->active) && $template->active!=1)?' selected ':'';?>>No</option></select></td></tr>

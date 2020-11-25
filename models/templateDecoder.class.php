@@ -32,7 +32,7 @@ class templateDecoder
 			$version = $jsonData->version;
 		}
 		if ( $validData ) {
-			$version === 3 || $version === 4 ? $jsonData = convertXULTemplate( $jsonData ) : false;
+			$version === 3 || $version === 4 ? $jsonData = $this->convertXULTemplate( $jsonData ) : false;
 			$select = $jsonData->select;
 			$where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
 			$having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );
@@ -177,11 +177,14 @@ class templateDecoder
 		}
 	
 		$idx = 0;
+
+		$IDL = json_decode( file_get_contents( 'config/IDL.json' ) );
+                
 		foreach ( $rels as $r ) {
 			if ( is_array($r) || is_object($r) ) {
-				buildCols( $r, 'dis_tab', $sel_order, $data->display_cols, $IDL);
-				buildCols( $r, 'filter_tab', NULL, $data->filter_cols, $IDL);
-				buildCols( $r, 'aggfilter_tab', NULL, $data->filter_cols, $IDL);
+				$this->buildCols( $r, 'dis_tab', $sel_order, $data->display_cols, $IDL);
+				$this->buildCols( $r, 'filter_tab', NULL, $data->filter_cols, $IDL);
+				$this->buildCols( $r, 'aggfilter_tab', NULL, $data->filter_cols, $IDL);
 			}
 	
 		}
@@ -196,7 +199,7 @@ class templateDecoder
 			$orig = $r->fields->{$tt}->$n;
 			$col = ( object ) [
 				"name" => $c->colname,
-				"path" => convertPath( $orig, $r , $IDL),	//needs fixed
+				"path" => $this->convertPath( $orig, $r , $IDL),	//needs fixed
 				"label" => $orig->alias,
 				"datatype" => $c->datatype,
 				"doc_text" => $c->field_doc,
@@ -208,13 +211,13 @@ class templateDecoder
 				"path_label" => preg_replace( "/\:\:/", "->", $r->label),
 				"index" => false
 			];
-			if ( $col_type == "filter_cols" ) {
+			if ( $colType == "filter_cols" ) {
 				@$col->operator = [
 					"op" => $orig->op,
 					"label" => $orig->op_label
 				];
 				@$col->index = $ci++;
-				isset( $orig->op_value->value ) ? $col["value"] = $orig->op_value->value : FALSE;
+				isset( $orig->op_value->value ) ? @$col->value = $orig->op_value->value : FALSE;
 			} else {
 				isset( $sel_order[$r->alias . $orig->colname] ) ? @$col->index = $sel_order[$r->alias . $orig->colname] : @$col->index = false;
 			}
@@ -226,7 +229,7 @@ class templateDecoder
 		if ( !isset( $cls ) || !isset( $args ) ) {
 			return null;
 		} else {
-			$n = $IDL->{ $cls };
+			$n = isset( $IDL->{ $cls } ) ? $IDL->{ $cls } : null;
 		}
 
 		if ( !$n ) {
@@ -238,21 +241,23 @@ class templateDecoder
 				];
 			}
 			$args->id = $cls;
-			if ( $args->from ) {
+			if ( isset( $args->from ) ) {
 				$args->id = $args->from . "." . $args->id;
 			}
 			$links = array();
 			foreach( $n->fields as $x ) {
+                            if ( isset( $x->type ) ) {
 				$x->type == "link" ? array_push( $links, $x ) : false;
+                            }
 			}
 
-			$args->idl = service($cls, null);
-			$args->uplink = $args->link;
+			$args->idl = $this->service($cls, null);
+			$args->uplink = isset( $args->link ) ? $args->link : null;
 			$args->classname = $cls;
 			$args->struct = $n;
-			$args->table = $n->table;
-			$args->fields = _sort_class_fields($n->fields);
-			$args->links = _sort_class_fields($links);
+			$args->table = isset( $n->table ) ? $n->table : null;
+			$args->fields = $this->_sort_class_fields($n->fields);
+			$args->links = $this->_sort_class_fields($links);
 			$args->children = [];
 
 			$args = json_encode( $args );
@@ -273,9 +278,9 @@ class templateDecoder
 		foreach( $table_path as $tp ) {
 			$cl_split = preg_split( "/-/", $tp);
 			$cls = $cl_split[0];
-			$fld = $cl_split[1];
+			$fld = isset( $cl_split[1] ) ? $cl_split[1] : null;
 			$args = ( object )[
-				"label" => $IDL->{$cls}->label
+				"label" => isset( $IDL->{$cls}->label ) ? $IDL->{$cls}->label : null
 			];
 
 			if( $prev_link != "" ) {
@@ -288,10 +293,10 @@ class templateDecoder
 						$args->link = $f;
 					}
 				}
-				$args->jtype = $join_parts[1];
+				$args->jtype = isset( $join_parts[1] ) ? $join_parts[1] : null;
 			}
 
-			array_push( $new_path, buildNode($cls, $args, $IDL));
+			array_push( $new_path, $this->buildNode($cls, $args, $IDL));
 			$prev_link = $tp;
 		}
 	}

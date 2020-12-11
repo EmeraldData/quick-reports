@@ -3,7 +3,7 @@
     $data = file_get_contents( "ver5.json" );
 
     $data = json_encode( decodeTemplateData( $data ) ); 
-    print_r( $data );
+    // print_r( $data );
 
 	function decodeTemplateData ($templateData) {
 
@@ -61,6 +61,7 @@
 						$relation = isset( $cl->relation ) ? $cl->relation : null;
 						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
+                        echo "from: " . $jsonData->from . "<br />relation: " . $relation . "<br />columnLabel: " . $columnLabel . "<br />";
 					// 	$columnLabel = "";
 					// 	pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
 					// 	$columnLabel = str_replace( '::', '->', $columnLabel);

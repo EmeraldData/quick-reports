@@ -22,9 +22,9 @@
                 return;
             }
 
-            $select = $jsonData->select;
+            // $select = $jsonData->select;
 
-            $returnObj->select = $select;
+            // $returnObj->select = $select;
 
             // $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
 			// $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );

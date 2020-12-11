@@ -1,0 +1,809 @@
+{
+  "version": 5,
+  "core_class": "ahr",
+  "select": [
+    {
+      "alias": "Hold ID",
+      "path": "ahr-id",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "id",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Request Date/Time",
+      "path": "ahr-request_time",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "request_time",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Target Object ID",
+      "path": "ahr-target",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "target",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Currently Frozen",
+      "path": "ahr-frozen",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "frozen",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Pickup Lib",
+      "path": "aou-shortname",
+      "field_doc": "",
+      "relation": "413df8472eb3495de6137209d94c2539",
+      "column": {
+        "colname": "shortname",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Request Lib",
+      "path": "aou-shortname",
+      "field_doc": "",
+      "relation": "462716f66fc7b046f1eb8a64b9beff2b",
+      "column": {
+        "colname": "shortname",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Hold User",
+      "path": "au-id",
+      "field_doc": "",
+      "relation": "0d692e82dd1cfc230f6c9d0b5f9c76ee",
+      "column": {
+        "colname": "id",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "User Placed the Hold",
+      "path": "au-id",
+      "field_doc": "",
+      "relation": "21dac70a3544f1b89d90c251302902ad",
+      "column": {
+        "colname": "id",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    }
+  ],
+  "from": {
+    "alias": "3b0d7d05c65006de7b2ca20f5fe39690",
+    "path": "ahr-ahr",
+    "table": "action.hold_request",
+    "idlclass": "ahr",
+    "label": "Hold Request",
+    "join": {
+      "pickup_lib-a83aec92287ef2eed487e52c74b46f81": {
+        "type": "inner",
+        "key": "id",
+        "alias": "413df8472eb3495de6137209d94c2539",
+        "path": "ahr-pickup_lib",
+        "table": "actor.org_unit",
+        "idlclass": "aou",
+        "label": "Hold Request -> Pickup Library"
+      },
+      "request_lib-1c6ab274a890bb96a1991321619cfea5": {
+        "type": "inner",
+        "key": "id",
+        "alias": "462716f66fc7b046f1eb8a64b9beff2b",
+        "path": "ahr-request_lib",
+        "table": "actor.org_unit",
+        "idlclass": "aou",
+        "label": "Hold Request -> Requesting Library"
+      },
+      "usr-4e09cff1d200f1b2657c55ddd4fdf2ee": {
+        "type": "inner",
+        "key": "id",
+        "alias": "0d692e82dd1cfc230f6c9d0b5f9c76ee",
+        "path": "ahr-usr",
+        "table": "actor.usr",
+        "idlclass": "au",
+        "label": "Hold Request -> Hold User"
+      },
+      "requestor-ec37b94ce77dcc7440f642f250a33297": {
+        "type": "inner",
+        "key": "id",
+        "alias": "21dac70a3544f1b89d90c251302902ad",
+        "path": "ahr-requestor",
+        "table": "actor.usr",
+        "idlclass": "au",
+        "label": "Hold Request -> Requesting User"
+      }
+    }
+  },
+  "where": [
+    {
+      "alias": "Fulfillment Date/Time",
+      "path": "ahr-fulfillment_time",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "fulfillment_time",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "is": null }
+    },
+    {
+      "alias": "Hold Cancel Date/Time",
+      "path": "ahr-cancel_time",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "cancel_time",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "is": null }
+    },
+    {
+      "alias": "Hold Type",
+      "path": "ahr-hold_type",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "hold_type",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "=": "T" }
+    },
+    {
+      "alias": "Capture Date/Time",
+      "path": "ahr-capture_time",
+      "field_doc": "",
+      "relation": "3b0d7d05c65006de7b2ca20f5fe39690",
+      "column": {
+        "colname": "capture_time",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "is": null }
+    },
+    {
+      "alias": "Organizational Unit ID",
+      "path": "aou-id",
+      "field_doc": "",
+      "relation": "462716f66fc7b046f1eb8a64b9beff2b",
+      "column": {
+        "colname": "id",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "in": "::P0" }
+    }
+  ],
+  "having": [],
+  "display_cols": [
+    {
+      "name": "id",
+      "label": "Hold ID",
+      "datatype": "id",
+      "index": 0,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "request_time",
+      "label": "Request Date/Time",
+      "datatype": "timestamp",
+      "index": 1,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "target",
+      "label": "Target Object ID",
+      "datatype": "link",
+      "index": 2,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "frozen",
+      "label": "Currently Frozen",
+      "datatype": "bool",
+      "index": 3,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "shortname",
+      "label": "Pickup Lib",
+      "required": true,
+      "datatype": "text",
+      "index": 4,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        },
+        {
+          "label": "Pickup Library",
+          "from": "ahr",
+          "link": {
+            "name": "pickup_lib",
+            "label": "Pickup Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "id": "ahr.aou",
+          "uplink": {
+            "name": "pickup_lib",
+            "label": "Pickup Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "classname": "aou",
+          "struct": {
+            "name": "aou",
+            "label": "Organizational Unit",
+            "table": "actor.org_unit",
+            "pkey": "id",
+            "pkey_sequence": "actor.org_unit_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "aou"
+          },
+          "table": "actor.org_unit"
+        }
+      ],
+      "path_label": "Hold Request -> Pickup Library",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "shortname",
+      "label": "Request Lib",
+      "required": true,
+      "datatype": "text",
+      "index": 5,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        },
+        {
+          "label": "Requesting Library",
+          "from": "ahr",
+          "link": {
+            "name": "request_lib",
+            "label": "Requesting Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "id": "ahr.aou",
+          "uplink": {
+            "name": "request_lib",
+            "label": "Requesting Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "classname": "aou",
+          "struct": {
+            "name": "aou",
+            "label": "Organizational Unit",
+            "table": "actor.org_unit",
+            "pkey": "id",
+            "pkey_sequence": "actor.org_unit_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "aou"
+          },
+          "table": "actor.org_unit"
+        }
+      ],
+      "path_label": "Hold Request -> Requesting Library",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "id",
+      "label": "Hold User",
+      "selector": "usrname",
+      "datatype": "id",
+      "index": 6,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        },
+        {
+          "label": "Hold User",
+          "from": "ahr",
+          "link": {
+            "name": "usr",
+            "label": "Hold User",
+            "type": "link",
+            "key": "id",
+            "class": "au",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "ahr.au",
+          "uplink": {
+            "name": "usr",
+            "label": "Hold User",
+            "type": "link",
+            "key": "id",
+            "class": "au",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "au",
+          "struct": {
+            "name": "au",
+            "label": "ILS User",
+            "table": "actor.usr",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "actor.usr_id_seq",
+            "core_label": "Core sources",
+            "classname": "au"
+          },
+          "table": "actor.usr"
+        }
+      ],
+      "path_label": "Hold Request -> Hold User",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "id",
+      "label": "User Placed the Hold",
+      "selector": "usrname",
+      "datatype": "id",
+      "index": 7,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        },
+        {
+          "label": "Requesting User",
+          "from": "ahr",
+          "link": {
+            "name": "requestor",
+            "label": "Requesting User",
+            "type": "link",
+            "key": "id",
+            "class": "au",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "ahr.au",
+          "uplink": {
+            "name": "requestor",
+            "label": "Requesting User",
+            "type": "link",
+            "key": "id",
+            "class": "au",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "au",
+          "struct": {
+            "name": "au",
+            "label": "ILS User",
+            "table": "actor.usr",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "actor.usr_id_seq",
+            "core_label": "Core sources",
+            "classname": "au"
+          },
+          "table": "actor.usr"
+        }
+      ],
+      "path_label": "Hold Request -> Requesting User",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    }
+  ],
+  "filter_cols": [
+    {
+      "name": "fulfillment_time",
+      "label": "Fulfillment Date/Time",
+      "datatype": "timestamp",
+      "index": 0,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "operator": { "label": "Is NULL", "op": "is" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "cancel_time",
+      "label": "Hold Cancel Date/Time",
+      "datatype": "timestamp",
+      "index": 1,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "operator": { "label": "Is NULL", "op": "is" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "hold_type",
+      "label": "Hold Type",
+      "type": "link",
+      "key": "hold_type",
+      "class": "cht",
+      "reltype": "has_a",
+      "datatype": "text",
+      "index": 2,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "operator": { "op": "=", "label": "Equals" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": "",
+      "value": "T"
+    },
+    {
+      "name": "capture_time",
+      "label": "Capture Date/Time",
+      "datatype": "timestamp",
+      "index": 3,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        }
+      ],
+      "path_label": "Hold Request",
+      "operator": { "label": "Is NULL", "op": "is" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "id",
+      "label": "Organizational Unit ID",
+      "selector": "shortname",
+      "datatype": "org_unit",
+      "index": 4,
+      "path": [
+        {
+          "label": "Hold Request",
+          "id": "ahr",
+          "classname": "ahr",
+          "struct": {
+            "name": "ahr",
+            "label": "Hold Request",
+            "table": "action.hold_request",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "action.hold_request_id_seq",
+            "core_label": "Core sources",
+            "classname": "ahr"
+          },
+          "table": "action.hold_request"
+        },
+        {
+          "label": "Requesting Library",
+          "from": "ahr",
+          "link": {
+            "name": "request_lib",
+            "label": "Requesting Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "id": "ahr.aou",
+          "uplink": {
+            "name": "request_lib",
+            "label": "Requesting Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "classname": "aou",
+          "struct": {
+            "name": "aou",
+            "label": "Organizational Unit",
+            "table": "actor.org_unit",
+            "pkey": "id",
+            "pkey_sequence": "actor.org_unit_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "aou"
+          },
+          "table": "actor.org_unit"
+        }
+      ],
+      "path_label": "Hold Request -> Requesting Library",
+      "operator": { "label": "In list", "op": "in" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    }
+  ]
+}

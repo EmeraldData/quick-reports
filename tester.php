@@ -62,7 +62,7 @@
 						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
 						$columnLabel = "";
-						$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
+						pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
 						$columnLabel = str_replace( '::', '->', $columnLabel);
 
 						$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;

@@ -135,7 +135,6 @@
 			// 	$returnObj->staticParams = (object) $staticParamsArray;
 		
 				return($returnObj);
-			}		
 		}
 	}
 

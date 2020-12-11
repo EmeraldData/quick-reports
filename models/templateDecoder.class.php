@@ -328,19 +328,27 @@ class templateDecoder
 
 	function _sort_class_fields( $arr ) {
 		$out = array();
-		array_push( $out, $arr[0] );
-		array_shift($arr);
-		$i = 0;
-		while ( count($arr) > 0 ) {
-			$aname = $arr[0]->label ? $arr[0]->label : $arr[0]->name;
-			$bname = $out[$i]->label ? $out[$i]->label : $out[$i]->name;
-			while ( strcmp( $aname, $bname) > 0 && $i < count( $arr ) ) {
+		if ( isset( $arr[0] ) ) {
+		    array_push( $out, $arr[0] );
+		    array_shift($arr);
+		    $i = 0;
+		    while ( count($arr) > 0 ) {
+			$arrLabel = isset( $arr[0]->label  ) ? $arr[0]->label : "";
+                        $arrName = isset( $arr[0]->name ) ? $arr[0]->name : "";
+
+                        //$aname = $arr[0]->label ? $arr[0]->label : $arr[0]->name;
+
+                        $bName = isset( $out[$i]->label  ) ? $out[$i]->label : "";
+                        $bLabel = isset( $out[$i]->label ) ? $out[$i]->label : $bName;
+			$bName = isset( $bLabel ) ? $bLabel : $bName; //$out[$i]->label ? $out[$i]->label : $out[$i]->name;
+			while ( strcmp( $arrName, $bName) > 0 && $i < count( $arr ) ) {
 				$i++;
 			}
 			array_splice( $out, $i, 0, array( $arr[0] ) );
 			array_shift( $arr );
 			$i = 0;
-		}
+		    }
+                }
 		return $out;
 	}
 }	

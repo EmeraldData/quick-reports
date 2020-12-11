@@ -2,7 +2,7 @@
     
     $data = file_get_contents( "ver5.json" );
 
-    $data = json_encode( $data ); 
+    $data = json_encode( decodeTemplateData( $data ), JSON_PRETTY_PRINT ); 
     print_r( $data );
 
 	function decodeTemplateData ($templateData) {
@@ -22,9 +22,9 @@
                 return;
             }
 
-            // $select = $jsonData->select;
+            $select = $jsonData->select;
 
-            // $returnObj->select = $select;
+            $returnObj->select = $select;
 
             // $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
 			// $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );

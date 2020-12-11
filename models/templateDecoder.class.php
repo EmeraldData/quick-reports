@@ -117,7 +117,7 @@ class templateDecoder
 						}
 
 						$paramsArray = array(
-							'column' => $columnLabel
+						   'column' => $columnLabel
 						   ,'transform' => $transform
 						   ,'transformLabel' => $transformLabel
 						   ,'op' => $op

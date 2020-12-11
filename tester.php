@@ -14,27 +14,27 @@
 
 		$jsonData = json_decode( $templateData, false );
         $select = $jsonData->select;
-        $returnObj->select = $select;
+        // $returnObj->select = $select;
 
         $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
         $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );
 
-        $returnObj->where = $where;
-        $returnObj->having = $having;
-			// foreach ( $select as $s ) {
-			// 	$columnName = $s->column->colname;
-			// 	$r = $s->relation;
-			// 	$relCol = $s->column;
-			// 	$displayAggregate = isset( $relCol->aggregate ) ? $relCol->aggregate : NULL;
-			// 	$displayTransformLabel = isset ( $relCol->transform_label ) ? $relCol->transform_label : NULL;
+        // $returnObj->where = $where;
+        // $returnObj->having = $having;
+			foreach ( $select as $s ) {
+				$columnName = $s->column->colname;
+				$r = $s->relation;
+				$relCol = $s->column;
+				$displayAggregate = isset( $relCol->aggregate ) ? $relCol->aggregate : NULL;
+				$displayTransformLabel = isset ( $relCol->transform_label ) ? $relCol->transform_label : NULL;
 	
-			// 	$columnArray = array(
-			// 		"name" => $s->alias,
-			// 		"aggregate" => $displayAggregate,
-			// 		"transformLabel"=>$displayTransformLabel
-			// 	);
+				$columnArray = array(
+					"name" => $s->alias,
+					"aggregate" => $displayAggregate,
+					"transformLabel"=>$displayTransformLabel
+				);
 				
-			// 	$reportColumnsArray[] = (object) $columnArray;
+				$reportColumnsArray[] = (object) $columnArray;
 
 			// 	$where = isset( $jsonData->where ) ?
 			// 		array(
@@ -120,9 +120,9 @@
 			// 				$staticParamsArray[] = (object) $paramsArray;
 			// 			}					
 			// 		}
-			// 	}
+			}
 			// 	$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only
-			// 	$returnObj->reportColumns = (object) $reportColumnsArray;
+				$returnObj->reportColumns = (object) $reportColumnsArray;
 			// 	$returnObj->userParams = (object) $userParamsArray;
 			// 	$returnObj->staticParams = (object) $staticParamsArray;
 		

@@ -14,8 +14,7 @@
 
 		$jsonData = json_decode( $templateData, false );
         $select = $jsonData->select;
-return $jsonData;
-            // $returnObj->select = $select;
+        $returnObj->select = $select;
 
             // $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
 			// $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );

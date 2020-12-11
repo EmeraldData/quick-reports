@@ -47,15 +47,15 @@
 						"columns" => $having
 					) : NULL;
 
-			// 	foreach ( array( "where", "having" ) as $c ) {
-			// 		if ( $c == "where" ) {
-			// 			if ( !isset( $where ) ) continue;
-			// 			$clause = $where;
-			// 		}
-			// 		if ( $c == "having" ) {
-			// 			if ( !isset( $having ) ) continue;
-			// 			$clause = $having;
-			// 		}
+				foreach ( array( "where", "having" ) as $c ) {
+					if ( $c == "where" ) {
+						if ( !isset( $where ) ) continue;
+						$clause = $where;
+					}
+					if ( $c == "having" ) {
+						if ( !isset( $having ) ) continue;
+						$clause = $having;
+					}
 
 			// 		foreach ( $clause as $cl ) {
 			// 			$relation = isset( $cl->relation ) ? $cl->relation : null;
@@ -119,7 +119,7 @@
 			// 			else {
 			// 				$staticParamsArray[] = (object) $paramsArray;
 			// 			}					
-			// 		}
+				}
 			}
 			// 	$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only
 				$returnObj->reportColumns = (object) $reportColumnsArray;

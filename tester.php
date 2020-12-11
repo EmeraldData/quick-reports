@@ -2,7 +2,7 @@
     
     $data = file_get_contents( "ver5.json" );
 
-    $data = json_encode( decodeTemplateData( $data ), JSON_PRETTY_PRINT ); 
+    $data = json_encode( decodeTemplateData( $data ) ); 
     print_r( $data );
 
 	function decodeTemplateData ($templateData) {

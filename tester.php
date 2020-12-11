@@ -57,69 +57,17 @@
 						$clause = $having;
 					}
 
-					foreach ( $clause as $cl ) {
-						$relation = isset( $cl->relation ) ? $cl->relation : null;
-						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
+					// foreach ( $clause as $cl ) {
+					// 	$relation = isset( $cl->relation ) ? $cl->relation : null;
+					// 	$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
-						$columnLabel = "";
-						pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
-						$columnLabel = str_replace( '::', '->', $columnLabel);
+					// 	$columnLabel = "";
+					// 	pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
+					// 	$columnLabel = str_replace( '::', '->', $columnLabel);
 
-						$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
-						$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
-
-			// 			$dataType = "";
-			// 			$op = "";
-			// 			$opLabel = "";
-			// 			$fieldDoc = "";
-			// 			$aggregate = "";
-			// 			foreach ( $jsonData->filter_cols as $fc ) {
-			// 				if ( $fc->name === $colName ) {
-			// 					$dataType = $fc->datatype;
-			// 					$op = $fc->operator->op;
-			// 					$opLabel = $fc->operator->label;
-			// 					isset( $fc->doc_text ) ? $fieldDoc = $fc->doc_text : false;
-			// 					if ( isset( $fc->transform->aggregate ) ) {
-			// 						if ( $fc->transform->aggregate != "undefined" ) {
-			// 							$aggregate = $fc->transform->aggregate;
-			// 						}
-			// 					}
-			// 					break;
-			// 				}
-			// 			}
-			// 			$tableName = "";
-			// 			$this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
-			// 			$P = isset( $cl->condition ) ? $cl->condition : null;
-
-			// 			if ( isset( $P ) ) {
-			// 				list($key, $opValue) = each($P);  //get the first (and only) value
-			// 			}
-			// 			if ( isset( $opValue ) ) {
-			// 				if (is_array($opValue)) $opValue = implode(',', $opValue);	//if array convert it back to a string
-			// 			} else {
-			// 				$opValue = null;
-			// 			}
-
-			// 			$paramsArray = array(
-			// 			   'column' => $columnLabel
-			// 			   ,'transform' => $transform
-			// 			   ,'transformLabel' => $transformLabel
-			// 			   ,'op' => $op
-			// 			   ,'opLabel' => $opLabel
-			// 			   ,'param'=> $opValue
-			// 			   ,'fieldDoc' => $fieldDoc
-			// 			   ,'aggregate' => $aggregate
-			// 			   ,'dataType' => $dataType
-			// 			   ,'table' => $tableName
-			// 			   );
-			// 		//if (mb_substr($opValue,0,3,'UTF-8')=='::P') {
-			// 			if (substr($opValue,0,3) == '::P') {
-			// 				$userParamsArray[] = (object) $paramsArray;
-			// 			}
-			// 			else {
-			// 				$staticParamsArray[] = (object) $paramsArray;
-			// 			}					
-                    }
+					// 	$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
+					// 	$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
+                    // }
                 }
 			}
 			// 	$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only

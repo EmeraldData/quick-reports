@@ -16,9 +16,11 @@
         $select = $jsonData->select;
         $returnObj->select = $select;
 
-            // $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
-			// $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );
+        $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
+        $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );
 
+        $returnObj->where = $where;
+        $returnObj->having = $having;
 			// foreach ( $select as $s ) {
 			// 	$columnName = $s->column->colname;
 			// 	$r = $s->relation;

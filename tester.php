@@ -13,16 +13,7 @@
 		$returnObj = new stdClass();
 
 		$jsonData = json_decode( $templateData, false );
-		if ( $jsonData != NULL ) {
-			$validData = $jsonData->version != NULL ? true : false;
-			$version = $jsonData->version;
-		}
-		if ( $validData ) {
-            if ( $version === 3 || $version || 4 ) {
-                return;
-            }
-
-            $select = $jsonData->select;
+        $select = $jsonData->select;
 return $jsonData;
             // $returnObj->select = $select;
 
@@ -135,7 +126,6 @@ return $jsonData;
 			// 	$returnObj->staticParams = (object) $staticParamsArray;
 		
 				return($returnObj);
-		}
 	}
 
 	// function convertXULTemplate ( $template ) {

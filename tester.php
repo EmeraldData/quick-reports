@@ -36,16 +36,16 @@
 				
 				$reportColumnsArray[] = (object) $columnArray;
 
-			// 	$where = isset( $jsonData->where ) ?
-			// 		array(
-			// 			"name" => "where",
-			// 			"columns" => $jsonData->where
-			// 		) : NULL;
-			// 	$having = isset( $jsonData->having ) ?
-			// 		array(
-			// 			"name" => "having",
-			// 			"columns" => $jsonData->having
-			// 		) : NULL;
+				$where = isset( $where ) ?
+					array(
+						"name" => "where",
+						"columns" => $where
+					) : NULL;
+				$having = isset( $having ) ?
+					array(
+						"name" => "having",
+						"columns" => $having
+					) : NULL;
 
 			// 	foreach ( array( "where", "having" ) as $c ) {
 			// 		if ( $c == "where" ) {

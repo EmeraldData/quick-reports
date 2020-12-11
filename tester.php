@@ -57,7 +57,7 @@
 						$clause = $having;
 					}
 
-			// 		foreach ( $clause as $cl ) {
+					foreach ( $clause as $cl ) {
 			// 			$relation = isset( $cl->relation ) ? $cl->relation : null;
 			// 			$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
@@ -119,7 +119,8 @@
 			// 			else {
 			// 				$staticParamsArray[] = (object) $paramsArray;
 			// 			}					
-				}
+                    }
+                }
 			}
 			// 	$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only
 				$returnObj->reportColumns = (object) $reportColumnsArray;

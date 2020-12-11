@@ -58,15 +58,15 @@
 					}
 
 					foreach ( $clause as $cl ) {
-			// 			$relation = isset( $cl->relation ) ? $cl->relation : null;
-			// 			$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
+						$relation = isset( $cl->relation ) ? $cl->relation : null;
+						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
-			// 			$columnLabel = "";
-			// 			$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
-			// 			$columnLabel = str_replace( '::', '->', $columnLabel);
+						$columnLabel = "";
+						$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
+						$columnLabel = str_replace( '::', '->', $columnLabel);
 
-			// 			$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
-			// 			$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
+						$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
+						$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
 
 			// 			$dataType = "";
 			// 			$op = "";
@@ -282,22 +282,22 @@
 // 		}
 // 	}
 
-// 	function pullLabel ( $d, $str, &$out, $tag, $subtag, $val ) {
-// 		if ( $d->$tag == $str ) {
-// 			$out = $d->$val;
-// 			return;
-// 		} else {
-// 			if ( isset( $d->$subtag ) ) {
-// 				if ( $d->$subtag ) {
-// 					foreach ( $d->$subtag as $j ) {
-// 						$this->pullLabel( $j, $str, $out, $tag, $subtag, $val );
-// 					}
-// 				}
-// 			} else {
-// 				return;
-// 			}
-// 		}
-// 	}
+	function pullLabel ( $d, $str, &$out, $tag, $subtag, $val ) {
+		if ( $d->$tag == $str ) {
+			$out = $d->$val;
+			return;
+		} else {
+			if ( isset( $d->$subtag ) ) {
+				if ( $d->$subtag ) {
+					foreach ( $d->$subtag as $j ) {
+						$this->pullLabel( $j, $str, $out, $tag, $subtag, $val );
+					}
+				}
+			} else {
+				return;
+			}
+		}
+	}
 
 // 	function service( $cls, $seed) {
 // 		return ( object ) [

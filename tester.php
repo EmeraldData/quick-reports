@@ -18,115 +18,121 @@
 			$version = $jsonData->version;
 		}
 		if ( $validData ) {
-			$version === 3 || $version === 4 ? $jsonData = $this->convertXULTemplate( $jsonData ) : false;
-			$select = $jsonData->select;
-			$where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
-			$having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );
+            if ( $version === 3 || $version || 4 ) {
+                return;
+            }
 
-			foreach ( $select as $s ) {
-				$columnName = $s->column->colname;
-				$r = $s->relation;
-				$relCol = $s->column;
-				$displayAggregate = isset( $relCol->aggregate ) ? $relCol->aggregate : NULL;
-				$displayTransformLabel = isset ( $relCol->transform_label ) ? $relCol->transform_label : NULL;
+            $select = $jsonData->select;
+
+            $returnObj->select = $select;
+
+            // $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
+			// $having = ( isset( $jsonData->having ) ? $jsonData->having : NULL );
+
+			// foreach ( $select as $s ) {
+			// 	$columnName = $s->column->colname;
+			// 	$r = $s->relation;
+			// 	$relCol = $s->column;
+			// 	$displayAggregate = isset( $relCol->aggregate ) ? $relCol->aggregate : NULL;
+			// 	$displayTransformLabel = isset ( $relCol->transform_label ) ? $relCol->transform_label : NULL;
 	
-				$columnArray = array(
-					"name" => $s->alias,
-					"aggregate" => $displayAggregate,
-					"transformLabel"=>$displayTransformLabel
-				);
+			// 	$columnArray = array(
+			// 		"name" => $s->alias,
+			// 		"aggregate" => $displayAggregate,
+			// 		"transformLabel"=>$displayTransformLabel
+			// 	);
 				
-				$reportColumnsArray[] = (object) $columnArray;
+			// 	$reportColumnsArray[] = (object) $columnArray;
 
-				$where = isset( $jsonData->where ) ?
-					array(
-						"name" => "where",
-						"columns" => $jsonData->where
-					) : NULL;
-				$having = isset( $jsonData->having ) ?
-					array(
-						"name" => "having",
-						"columns" => $jsonData->having
-					) : NULL;
+			// 	$where = isset( $jsonData->where ) ?
+			// 		array(
+			// 			"name" => "where",
+			// 			"columns" => $jsonData->where
+			// 		) : NULL;
+			// 	$having = isset( $jsonData->having ) ?
+			// 		array(
+			// 			"name" => "having",
+			// 			"columns" => $jsonData->having
+			// 		) : NULL;
 
-				foreach ( array( "where", "having" ) as $c ) {
-					if ( $c == "where" ) {
-						if ( !isset( $where ) ) continue;
-						$clause = $where;
-					}
-					if ( $c == "having" ) {
-						if ( !isset( $having ) ) continue;
-						$clause = $having;
-					}
+			// 	foreach ( array( "where", "having" ) as $c ) {
+			// 		if ( $c == "where" ) {
+			// 			if ( !isset( $where ) ) continue;
+			// 			$clause = $where;
+			// 		}
+			// 		if ( $c == "having" ) {
+			// 			if ( !isset( $having ) ) continue;
+			// 			$clause = $having;
+			// 		}
 
-					foreach ( $clause as $cl ) {
-						$relation = isset( $cl->relation ) ? $cl->relation : null;
-						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
+			// 		foreach ( $clause as $cl ) {
+			// 			$relation = isset( $cl->relation ) ? $cl->relation : null;
+			// 			$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
-						$columnLabel = "";
-						$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
-						$columnLabel = str_replace( '::', '->', $columnLabel);
+			// 			$columnLabel = "";
+			// 			$this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
+			// 			$columnLabel = str_replace( '::', '->', $columnLabel);
 
-						$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
-						$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
+			// 			$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
+			// 			$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
 
-						$dataType = "";
-						$op = "";
-						$opLabel = "";
-						$fieldDoc = "";
-						$aggregate = "";
-						foreach ( $jsonData->filter_cols as $fc ) {
-							if ( $fc->name === $colName ) {
-								$dataType = $fc->datatype;
-								$op = $fc->operator->op;
-								$opLabel = $fc->operator->label;
-								isset( $fc->doc_text ) ? $fieldDoc = $fc->doc_text : false;
-								if ( isset( $fc->transform->aggregate ) ) {
-									if ( $fc->transform->aggregate != "undefined" ) {
-										$aggregate = $fc->transform->aggregate;
-									}
-								}
-								break;
-							}
-						}
-						$tableName = "";
-						$this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
-						$P = isset( $cl->condition ) ? $cl->condition : null;
+			// 			$dataType = "";
+			// 			$op = "";
+			// 			$opLabel = "";
+			// 			$fieldDoc = "";
+			// 			$aggregate = "";
+			// 			foreach ( $jsonData->filter_cols as $fc ) {
+			// 				if ( $fc->name === $colName ) {
+			// 					$dataType = $fc->datatype;
+			// 					$op = $fc->operator->op;
+			// 					$opLabel = $fc->operator->label;
+			// 					isset( $fc->doc_text ) ? $fieldDoc = $fc->doc_text : false;
+			// 					if ( isset( $fc->transform->aggregate ) ) {
+			// 						if ( $fc->transform->aggregate != "undefined" ) {
+			// 							$aggregate = $fc->transform->aggregate;
+			// 						}
+			// 					}
+			// 					break;
+			// 				}
+			// 			}
+			// 			$tableName = "";
+			// 			$this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
+			// 			$P = isset( $cl->condition ) ? $cl->condition : null;
 
-						if ( isset( $P ) ) {
-							list($key, $opValue) = each($P);  //get the first (and only) value
-						}
-						if ( isset( $opValue ) ) {
-							if (is_array($opValue)) $opValue = implode(',', $opValue);	//if array convert it back to a string
-						} else {
-							$opValue = null;
-						}
+			// 			if ( isset( $P ) ) {
+			// 				list($key, $opValue) = each($P);  //get the first (and only) value
+			// 			}
+			// 			if ( isset( $opValue ) ) {
+			// 				if (is_array($opValue)) $opValue = implode(',', $opValue);	//if array convert it back to a string
+			// 			} else {
+			// 				$opValue = null;
+			// 			}
 
-						$paramsArray = array(
-						   'column' => $columnLabel
-						   ,'transform' => $transform
-						   ,'transformLabel' => $transformLabel
-						   ,'op' => $op
-						   ,'opLabel' => $opLabel
-						   ,'param'=> $opValue
-						   ,'fieldDoc' => $fieldDoc
-						   ,'aggregate' => $aggregate
-						   ,'dataType' => $dataType
-						   ,'table' => $tableName
-						   );
-					//if (mb_substr($opValue,0,3,'UTF-8')=='::P') {
-						if (substr($opValue,0,3) == '::P') {
-							$userParamsArray[] = (object) $paramsArray;
-						}
-						else {
-							$staticParamsArray[] = (object) $paramsArray;
-						}					
-					}
-				}
-				$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only
-				$returnObj->reportColumns = (object) $reportColumnsArray;
-				$returnObj->userParams = (object) $userParamsArray;
-				$returnObj->staticParams = (object) $staticParamsArray;
+			// 			$paramsArray = array(
+			// 			   'column' => $columnLabel
+			// 			   ,'transform' => $transform
+			// 			   ,'transformLabel' => $transformLabel
+			// 			   ,'op' => $op
+			// 			   ,'opLabel' => $opLabel
+			// 			   ,'param'=> $opValue
+			// 			   ,'fieldDoc' => $fieldDoc
+			// 			   ,'aggregate' => $aggregate
+			// 			   ,'dataType' => $dataType
+			// 			   ,'table' => $tableName
+			// 			   );
+			// 		//if (mb_substr($opValue,0,3,'UTF-8')=='::P') {
+			// 			if (substr($opValue,0,3) == '::P') {
+			// 				$userParamsArray[] = (object) $paramsArray;
+			// 			}
+			// 			else {
+			// 				$staticParamsArray[] = (object) $paramsArray;
+			// 			}					
+			// 		}
+			// 	}
+			// 	$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only
+			// 	$returnObj->reportColumns = (object) $reportColumnsArray;
+			// 	$returnObj->userParams = (object) $userParamsArray;
+			// 	$returnObj->staticParams = (object) $staticParamsArray;
 		
 				return($returnObj);
 			}		

@@ -23,7 +23,7 @@
             }
 
             $select = $jsonData->select;
-return $select;
+return $jsonData;
             // $returnObj->select = $select;
 
             // $where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );

@@ -57,9 +57,9 @@
 						$clause = $having;
 					}
 
-					// foreach ( $clause as $cl ) {
-					// 	$relation = isset( $cl->relation ) ? $cl->relation : null;
-					// 	$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
+					foreach ( $clause as $cl ) {
+						$relation = isset( $cl->relation ) ? $cl->relation : null;
+						$colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
 
 					// 	$columnLabel = "";
 					// 	pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
@@ -67,7 +67,7 @@
 
 					// 	$transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
 					// 	$transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
-                    // }
+                    }
                 }
 			}
 			// 	$returnObj->docURL = isset($jsonData->doc_url) ? $jsonData->doc_url : NULL;		//version 4 templates only

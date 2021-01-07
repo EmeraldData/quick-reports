@@ -112,7 +112,7 @@ class templateDecoder
         $aggregate = "";
 
         if ( isset( $jsonData->filter_cols ) ) {
-            foreach ( $jsonData->filter_cols as $fc ) { print_r(filter_cols);
+            foreach ( $jsonData->filter_cols as $fc ) { print_r($jsonData->filter_cols);
                     if ( $fc->name === $colName ) {
                         $dataType = $fc->datatype;
                         $op = $fc->operator->op;

@@ -130,7 +130,7 @@ class templateDecoder
 
         $tableName = "";
         $this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
-        $P = isset( $cl->condition ) ? $cl->condition : null;
+        $P = isset( $cl->condition ) ? $cl->condition : null; print_r($P);
 
         if ( isset( $P ) ) {
                 list( $key, $opValue ) = each( $P );  //get the first (and only) value

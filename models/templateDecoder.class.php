@@ -123,7 +123,7 @@ class templateDecoder
                                 $aggregate = $fc->transform->aggregate;
                             }
                         }   
-                        //break;
+                        break;
                     }
             }
         }

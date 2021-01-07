@@ -112,7 +112,7 @@ class templateDecoder
         $aggregate = "";
 
         if ( isset( $jsonData->filter_cols ) ) {
-            foreach ( $jsonData->filter_cols as $fc ) {
+            foreach ( $jsonData->filter_cols as $fc ) { print_r(filter_cols);
                     if ( $fc->name === $colName ) {
                         $dataType = $fc->datatype;
                         $op = $fc->operator->op;
@@ -130,7 +130,7 @@ class templateDecoder
 
         $tableName = "";
         $this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
-        $P = isset( $cl->condition ) ? $cl->condition : null; print_r($P);
+        $P = isset( $cl->condition ) ? $cl->condition : null; 
 
         if ( isset( $P ) ) {
                 list( $key, $opValue ) = each( $P );  //get the first (and only) value

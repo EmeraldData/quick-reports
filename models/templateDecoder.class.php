@@ -131,12 +131,12 @@ class templateDecoder
         $tableName = "";
         $this->pullLabel( $jsonData->from, $relation, $tableName, "alias", "join", "table" );
         $P = isset( $cl->condition ) ? $cl->condition : null;
-print_r($P);
+
         if ( isset( $P ) ) {
                 list( $key, $opValue ) = each( $P );  //get the first (and only) value
         }
 
-        if ( isset( $opValue ) ) 
+        if ( isset( $opValue ) ) {
               if ( is_array( $opValue ) ) $opValue = implode( ',', $opValue );      //if array convert it back to a string
         } else {
                 $opValue = "";

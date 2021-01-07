@@ -50,17 +50,17 @@ class templateDecoder
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
                         $paramsArray = $this->returnClause( $cl, $jsonData );
-                        if ( isset( $paramsArray->param ) ) { 
-                        if ( strlen( $paramsArray->param ) > 2 ) {
-                                if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
-                                    $userParamsArray[] = (object) $paramsArray;
-                                } else {
-                                    $staticParamsArray[] = (object) $paramsArray;
-                                }
-                            } else {
-                                    $staticParamsArray[] = (object) $paramsArray;
-                            }
-                        }
+                        // if ( isset( $paramsArray->param ) ) { 
+                        // if ( strlen( $paramsArray->param ) > 2 ) {
+                        //         if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
+                        //             $userParamsArray[] = (object) $paramsArray;
+                        //         } else {
+                        //             $staticParamsArray[] = (object) $paramsArray;
+                        //         }
+                        //     } else {
+                        //             $staticParamsArray[] = (object) $paramsArray;
+                        //     }
+                        // }
                     }
                 }
         	}
@@ -139,8 +139,10 @@ class templateDecoder
         if ( isset( $opValue ) ) {
               if ( is_array( $opValue ) ) $opValue = implode( ',', $opValue );      //if array convert it back to a string
         } else {
-                $opValue = "";
+            $opValue = "";
         }
+
+        $paramType = strlen( $opValue ) > 2 ? substr( $opValue, 0, 3 ) == "::P" ? "user" : "static" : "static"; 
 
         $arr1 = array(  
                 'column' => $columnLabel
@@ -153,7 +155,9 @@ class templateDecoder
                 ,'aggregate' => $aggregate
                 ,'dataType' => $dataType
                 ,'table' => $tableName
+                ,'paramType' => $paramType
         );
+
         print_r($arr1);
     }
 }	

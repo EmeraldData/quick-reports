@@ -305,7 +305,7 @@ class reportView extends baseReportView {
 			return submitReport(saveType); 
 		}
 
-		var columnNames=<?php echo '{',$jsColumnNamesString,'};\r\n'; ?>
+		var columnNames=<?php echo '{',$jsColumnNamesString,'};'?>
 		</script>
 					
 	<?php 			

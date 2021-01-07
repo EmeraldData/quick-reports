@@ -49,8 +49,8 @@ class templateDecoder
 			foreach( array( $where, $having ) as $clause ) {
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
-                        $paramsArray = $this->returnClause( $cl, $jsonData ); print_r($paramsArray);
-                        if ( isset( $paramsArray->param ) ) { print_r($paramsArray->param);
+                        $paramsArray = $this->returnClause( $cl, $jsonData ); 
+                        if ( isset( $paramsArray->param ) ) { 
                         if ( strlen( $paramsArray->param ) > 2 ) {
                                 if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
                                     $userParamsArray[] = (object) $paramsArray;
@@ -141,7 +141,7 @@ class templateDecoder
         } else {
                 $opValue = "";
         }
-
+echo $columnLabel . $transform . $transformLabel . $op . $opLabel;
         return array(  
                 'column' => $columnLabel
                 ,'transform' => $transform

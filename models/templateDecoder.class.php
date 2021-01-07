@@ -49,7 +49,7 @@ class templateDecoder
 			foreach( array( $where, $having ) as $clause ) {
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
-                        $paramsArray = $this->returnClause( $cl, $jsonData );
+                        $paramsArray = $this->returnClause( $cl, $jsonData ); print_r($paramsArray);
                         if ( isset( $paramsArray->param ) ) { 
                         if ( strlen( $paramsArray->param ) > 2 ) {
                                 if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
@@ -112,7 +112,7 @@ class templateDecoder
         $aggregate = "";
 
         if ( isset( $jsonData->filter_cols ) ) {
-            foreach ( $jsonData->filter_cols as $fc ) { print_r($jsonData->filter_cols);
+            foreach ( $jsonData->filter_cols as $fc ) {
                     if ( $fc->name === $colName ) {
                         $dataType = $fc->datatype;
                         $op = $fc->operator->op;

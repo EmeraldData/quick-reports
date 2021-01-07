@@ -49,7 +49,7 @@ class templateDecoder
 			foreach( array( $where, $having ) as $clause ) {
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
-                        $paramsArray = $this->returnClause( $cl, $jsonData );
+                        $paramsArray = (object) $this->returnClause( $cl, $jsonData );
                         print_r($paramsArray->paramType);
                         //         if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
                         //             $userParamsArray[] = (object) $paramsArray;

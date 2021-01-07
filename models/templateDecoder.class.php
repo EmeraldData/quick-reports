@@ -50,8 +50,7 @@ class templateDecoder
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
                         $paramsArray = $this->returnClause( $cl, $jsonData );
-                        // if ( isset( $paramsArray->param ) ) { 
-                        // if ( strlen( $paramsArray->param ) > 2 ) {
+                        print_r($paramsArray);
                         //         if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
                         //             $userParamsArray[] = (object) $paramsArray;
                         //         } else {
@@ -60,7 +59,7 @@ class templateDecoder
                         //     } else {
                         //             $staticParamsArray[] = (object) $paramsArray;
                         //     }
-                        // }
+
                     }
                 }
         	}
@@ -158,7 +157,7 @@ class templateDecoder
                 ,'paramType' => $paramType
         );
 
-        print_r($arr1);
+        return $arr1;
     }
 }	
 ?>

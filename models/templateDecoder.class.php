@@ -142,7 +142,7 @@ class templateDecoder
                 $opValue = "";
         }
 
-        $arr1 = array(  //change back to return
+        return array(  
                 'column' => $columnLabel
                 ,'transform' => $transform
                 ,'transformLabel' => $transformLabel
@@ -154,7 +154,6 @@ class templateDecoder
                 ,'dataType' => $dataType
                 ,'table' => $tableName
         );
-        print_r($arr1);
     }
 }	
 ?>

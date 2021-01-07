@@ -49,7 +49,7 @@ class templateDecoder
 			foreach( array( $where, $having ) as $clause ) {
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
-                        $paramsArray = $this->returnClause( $cl, $jsonData ); print_r($paramsArray);
+                        $paramsArray = $this->returnClause( $cl, $jsonData );
                         if ( isset( $paramsArray->param ) ) { 
                         if ( strlen( $paramsArray->param ) > 2 ) {
                                 if ( substr( $paramsArray->param, 0, 3) == "::P" ) {
@@ -142,7 +142,7 @@ class templateDecoder
                 $opValue = "";
         }
 
-        return array(  
+        $arr1 = array(  
                 'column' => $columnLabel
                 ,'transform' => $transform
                 ,'transformLabel' => $transformLabel
@@ -154,6 +154,7 @@ class templateDecoder
                 ,'dataType' => $dataType
                 ,'table' => $tableName
         );
+        print_r($arr1);
     }
 }	
 ?>

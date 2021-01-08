@@ -50,7 +50,7 @@ class templateDecoder
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
                         $paramsArray = (object) $this->returnClause( $cl, $jsonData ); print_r($paramsArray);
-                        if (isset ( $paramArray->paramType ) ) {
+                        if (isset ( $paramsArray->paramType ) ) {
                             if ( $paramsArray->paramType == "user" ) {
                                 $userParamsArray[] = (object) $paramsArray;
                             } else {

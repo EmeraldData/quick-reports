@@ -110,7 +110,7 @@ class templateDecoder
         if ( isset( $jsonData->filter_cols ) ) {
             foreach ( $jsonData->filter_cols as $fc ) {
                     if ( $fc->name === $colName ) {
-                        echo $fc-->name . " : " . $colName . "<br />";
+                        echo $fc->name . " : " . $colName . "<br />";
                         $dataType = $fc->datatype;
                         $op = $fc->operator->op;
                         $opLabel = $fc->operator->label;

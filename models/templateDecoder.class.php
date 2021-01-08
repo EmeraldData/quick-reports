@@ -89,7 +89,7 @@ class templateDecoder
 
     function returnClause( $cl, $jsonData ) {
         $relation = isset( $cl->relation ) ? $cl->relation : null;
-        $colName = isset( $cl->column->colname ) ? $cl->column->colname : null;
+        $colName = isset( $cl->column->colname ) ? $cl->column->colname : null; print_r($colName);
 
         $columnLabel = "";
         $this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
@@ -151,8 +151,6 @@ class templateDecoder
                 ,'table' => $tableName
                 ,'paramType' => $paramType
         );
-
-        return $arr1;
     }
 }	
 ?>

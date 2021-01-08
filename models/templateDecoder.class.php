@@ -49,7 +49,7 @@ class templateDecoder
 			foreach( array( $where, $having ) as $clause ) {
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
-                        $paramsArray = (object) $this->returnClause( $cl, $jsonData );
+                        $paramsArray = (object) $this->returnClause( $cl, $jsonData ); print_r($paramArray);
                         if (isset ( $paramArray->paramType ) ) {
                             if ( $paramsArray->paramType == "user" ) {
                                 $userParamsArray[] = (object) $paramsArray;
@@ -91,7 +91,7 @@ class templateDecoder
 
     function returnClause( $cl, $jsonData ) {
         $relation = isset( $cl->relation ) ? $cl->relation : null;
-        $colName = isset( $cl->column->colname ) ? $cl->column->colname : null; print_r($colName);
+        $colName = isset( $cl->column->colname ) ? $cl->column->colname : null; 
 
         $columnLabel = "";
         $this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );

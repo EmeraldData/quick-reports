@@ -140,7 +140,7 @@ class templateDecoder
 
         $paramType = strlen( $opValue ) > 2 ? substr( $opValue, 0, 3 ) == "::P" ? "user" : "static" : "static"; 
 
-        $arr1 = array(  
+        return array(  
                 'column' => $columnLabel
                 ,'transform' => $transform
                 ,'transformLabel' => $transformLabel

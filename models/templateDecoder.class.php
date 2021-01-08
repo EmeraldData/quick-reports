@@ -49,7 +49,7 @@ class templateDecoder
 			foreach( array( $where, $having ) as $clause ) {
                 if ( isset( $clause ) ) {
                     foreach ( $clause as $cl ) {
-                        $paramsArray = (object) $this->returnClause( $cl, $jsonData ); print_r($paramsArray);
+                        $paramsArray = (object) $this->returnClause( $cl, $jsonData );
                         if (isset ( $paramArray->paramType ) ) {
                             if ( $paramsArray->paramType == "user" ) {
                                 $userParamsArray[] = (object) $paramsArray;
@@ -109,6 +109,7 @@ class templateDecoder
 
         if ( isset( $jsonData->filter_cols ) ) {
             foreach ( $jsonData->filter_cols as $fc ) {
+                    echo $fc->path_label . "<br />";
                     if ( $fc->name === $colName ) {
                         $dataType = $fc->datatype;
                         $op = $fc->operator->op;

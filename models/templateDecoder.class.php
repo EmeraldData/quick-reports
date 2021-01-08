@@ -95,7 +95,7 @@ class templateDecoder
 
         $columnLabel = "";
         $this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
-        $columnLabel = str_replace( '::', '->', $columnLabel);
+        //$columnLabel = str_replace( '::', '->', $columnLabel);
 
         $transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
         $transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";

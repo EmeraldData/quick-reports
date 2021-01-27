@@ -25,6 +25,12 @@ class templateDecoder
 
 		$jsonData = json_decode( $templateData, false );
 		$validData = ( $jsonData != NULL );
+
+		if ( $jsonData->version != "5") {
+		    new displayMessageView( "Error: Invalid template version. Must be Version 5." );
+                    return NULL;
+                }
+
 		if ( $validData ) {
 			$select = $jsonData->select;
 			$where = ( isset( $jsonData->where ) ? $jsonData->where : NULL );
@@ -95,7 +101,6 @@ class templateDecoder
 
         $columnLabel = "";
         $this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
-        //$columnLabel = str_replace( '::', '->', $columnLabel);
 
         $transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
         $transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
@@ -156,4 +161,3 @@ class templateDecoder
     }
 }	
 ?>
-

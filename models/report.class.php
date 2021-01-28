@@ -158,7 +158,7 @@ class report extends db
 					break;
 
 				case 'config.circ_modifier':
-					$query = 'select code, name from config.circ_modifier order by name';
+					$query = 'select code as id, name from config.circ_modifier order by name';
 					break;
 					
 				default:	

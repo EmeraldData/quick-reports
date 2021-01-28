@@ -63,7 +63,7 @@ class baseReportView {
 			else {
 				$selected = '';
 			}
-			$quote = (strpos($values->id, '"') === NULL) ? '"' : "'";
+			$quote = (strpos($values->id, '"') === NULL) ? '"' : "'"; print_r($values);
 			$select .= '<option '.$selected.'value='.$quote.$values->id.$quote.'>'.$values->name.'</option>';
 			$index++;
 		}

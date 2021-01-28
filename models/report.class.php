@@ -156,6 +156,10 @@ class report extends db
 					}
 					return $fieldDocArray;
 					break;
+
+				case 'config.circ_modifier':
+					$query = 'select code, name from config.circ_modifier order by name';
+					break;
 					
 				default:	
 					return NULL;

@@ -164,6 +164,10 @@ class report extends db
 				case 'config.item_form_map':
 					$query = 'select code as id, value as name from config.item_form_map order by value';
 					break;
+				
+				case 'config.language_map':
+					$query = 'select code as id, value as name from config.language_map order by value';
+					break;
 					
 				default:	
 					return NULL;

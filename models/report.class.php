@@ -160,6 +160,10 @@ class report extends db
 				case 'config.circ_modifier':
 					$query = 'select code as id, name from config.circ_modifier order by name';
 					break;
+				
+				case 'config.item_form_map':
+					$query = 'select code as id, value as name from config.item_form_map order by value';
+					break;
 					
 				default:	
 					return NULL;

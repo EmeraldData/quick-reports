@@ -20,6 +20,7 @@ class baseReportView {
 			}
 
 			$valueCount = false;
+			$selected = "";
 			if ( isset( $this->defaultValues ) && isset ( $values ) ){
 				if ((isset($this->defaultValues->paramsDecoded->$name) && in_array($values->id, $this->defaultValues->paramsDecoded->$name))
 				|| (count($this->defaultValues)==0 && $values->id==$_SESSION['homeOU'])) {
@@ -28,7 +29,7 @@ class baseReportView {
 					if (NULL == $firstSelected) $firstSelected = $index;
 				}
 				else {
-					$selected = '';
+					$selected = "";
 				}
 			}
 		

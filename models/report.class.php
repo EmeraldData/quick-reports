@@ -169,6 +169,10 @@ class report extends db
 					$query = 'select code as id, value as name from config.language_map order by value';
 					break;
 					
+				case 'config.audience_map':
+					$query = 'select code as id, value as name from config.audience_map order by value';
+					break;
+
 				default:	
 					return NULL;
 					break;

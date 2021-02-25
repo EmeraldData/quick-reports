@@ -18,15 +18,20 @@ class baseReportView {
 				case 2:  $spaces = '&nbsp;&nbsp;&nbsp;&nbsp;'; break;
 				default: $spaces = '&nbsp;'; break;
 			}
-			if ((isset($this->defaultValues->paramsDecoded->$name) && in_array($values->id, $this->defaultValues->paramsDecoded->$name))
+
+			$valueCount = false;
+			if ( isset( $this->defaultValues ) && isset ( $values ) ){
+				if ((isset($this->defaultValues->paramsDecoded->$name) && in_array($values->id, $this->defaultValues->paramsDecoded->$name))
 				|| (count($this->defaultValues)==0 && $values->id==$_SESSION['homeOU'])) {
 				$selected = ' selected ';
 				$selectedValues .= $values->shortname.'&nbsp;&nbsp;<br>';
-				if (NULL == $firstSelected) $firstSelected = $index;
+					if (NULL == $firstSelected) $firstSelected = $index;
 				}
-			else {
-				$selected = '';
-			}				
+				else {
+					$selected = '';
+				}
+			}
+		
 			$select .= '<option '.$selected.' value="'.$values->id.'">'.$spaces.$values->shortname.'</option>';
 			$index++;
 		}

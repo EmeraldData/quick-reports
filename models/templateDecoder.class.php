@@ -104,6 +104,19 @@ class templateDecoder
         $columnLabel = "";
         $this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
 
+        $columnLabelFull = $jsonData->from->alias == $relation ? $jsonData->from . " -> " . $cl->alias : null;
+
+        if ( !isset( $columnLabelFull ) ) {
+            if ( isset( $jsonData->from->join ) ) {
+                foreach( $jsonData->from->join as $j ) {
+                    if ( $j->alias == $relation ) {
+                        $columnLabelFull = $j->label . " -> " . $cl->alias;
+                        break;
+                    }
+                }
+            }
+        }
+
         $transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
         $transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
 
@@ -121,7 +134,6 @@ class templateDecoder
                         $op = $fc->operator->op;
                         $opLabel = $fc->operator->label;
                         isset( $fc->doc_text ) ? $fieldDoc = $fc->doc_text : false;
-                        $columnLabel = $fc->path_label . " -&gt; " . $fc->label;
                         if ( isset( $fc->transform->aggregate ) ) {
                             if ( $fc->transform->aggregate != "undefined" ) {
                                 $aggregate = $fc->transform->aggregate;
@@ -149,7 +161,7 @@ class templateDecoder
         $paramType = strlen( $opValue ) > 2 ? substr( $opValue, 0, 3 ) == "::P" ? "user" : "static" : "static"; 
 
         return array(  
-                'column' => $columnLabel
+                'column' => $columnLabelFull
                 ,'transform' => $transform
                 ,'transformLabel' => $transformLabel
                 ,'op' => $op
@@ -161,6 +173,19 @@ class templateDecoder
                 ,'table' => $tableName
                 ,'paramType' => $paramType
         );
+    }
+
+    function returnColumnLabel( $d, $rel, $tag, $val, $retVal ) {
+        $val = "";
+        foreach( $d as $d1 ) {
+            if ( isset( $d1->$tag ) ) {
+                if ( $d1->$tag == $val ) {
+                    $val = $d1->$retVal;
+                    break;
+                }
+            }
+        }
+        return $val;
     }
 }	
 ?>

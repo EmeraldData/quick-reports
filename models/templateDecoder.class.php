@@ -121,7 +121,7 @@ class templateDecoder
                         $op = $fc->operator->op;
                         $opLabel = $fc->operator->label;
                         isset( $fc->doc_text ) ? $fieldDoc = $fc->doc_text : false;
-                        $columnLabel = $fc->path_label . " -> " . $fc->label;
+                        $columnLabel = $fc->path_label . " -&gt; " . $fc->label;
                         if ( isset( $fc->transform->aggregate ) ) {
                             if ( $fc->transform->aggregate != "undefined" ) {
                                 $aggregate = $fc->transform->aggregate;

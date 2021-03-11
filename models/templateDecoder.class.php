@@ -104,7 +104,7 @@ class templateDecoder
         $columnLabel = "";
         $this->pullLabel( $jsonData->from, $relation, $columnLabel, "alias", "join", "label" );
 
-        $columnLabelFull = $jsonData->from->alias == $relation ? $jsonData->from . " -> " . $cl->alias : null;
+        $columnLabelFull = $jsonData->from->alias == $relation ? $jsonData->from->label . " -> " . $cl->alias : null;
 
         if ( !isset( $columnLabelFull ) ) {
             if ( isset( $jsonData->from->join ) ) {

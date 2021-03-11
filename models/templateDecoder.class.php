@@ -104,19 +104,6 @@ class templateDecoder
 
         $columnLabelFull = $columnLabel . " -> " . $cl->alias;
 
-        // $columnLabelFull = $jsonData->from->alias == $relation ? $jsonData->from->label . " -> " . $cl->alias : null;
-
-        // if ( !isset( $columnLabelFull ) ) {
-        //     if ( isset( $jsonData->from->join ) ) {
-        //         foreach( $jsonData->from->join as $j ) {
-        //             if ( $j->alias == $relation ) {
-        //                 $columnLabelFull = $j->label . " -> " . $cl->alias;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
-
         $transform = isset( $cl->column->transform ) ? $cl->column->transform : null;
         $transformLabel = isset( $cl->column->transform_label ) ? $cl->column->transform_label : "";
 

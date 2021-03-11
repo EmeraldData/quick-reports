@@ -111,6 +111,7 @@ class templateDecoder
                 foreach( $jsonData->from->join as $j ) {
                     if ( $j->alias == $relation ) {
                         $columnLabelFull = $j->label . " -> " . $cl->alias;
+                        print_r($columnLabelFull);
                         break;
                     }
                 }

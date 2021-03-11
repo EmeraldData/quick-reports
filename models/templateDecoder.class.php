@@ -72,8 +72,6 @@ class templateDecoder
 			$returnObj->userParams = (object) $userParamsArray;
 			$returnObj->staticParams = (object) $staticParamsArray;
             
-            print_r( $returnObj );
-
 			return($returnObj);
 		} else {
 			new displayMessageView( "JSON format error decoding template data." );

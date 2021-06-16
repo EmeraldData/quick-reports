@@ -1,0 +1,1393 @@
+{
+  "version": 5,
+  "core_class": "circ",
+  "select": [
+    {
+      "alias": "TCN",
+      "path": "rmsr-tcn_value",
+      "field_doc": "",
+      "relation": "24c245bbcb355e867681c5343406e2bf",
+      "column": {
+        "colname": "tcn_value",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Title",
+      "path": "rmsr-title",
+      "field_doc": "",
+      "relation": "24c245bbcb355e867681c5343406e2bf",
+      "column": {
+        "colname": "title",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Author",
+      "path": "rmsr-author",
+      "field_doc": "",
+      "relation": "24c245bbcb355e867681c5343406e2bf",
+      "column": {
+        "colname": "author",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Publication Year",
+      "path": "rmsr-pubdate",
+      "field_doc": "",
+      "relation": "24c245bbcb355e867681c5343406e2bf",
+      "column": {
+        "colname": "pubdate",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Circ Modifier",
+      "path": "ccm-code",
+      "field_doc": "",
+      "relation": "fc07b38d3247a8fe04de8dce0c976d67",
+      "column": {
+        "colname": "code",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": false
+      }
+    },
+    {
+      "alias": "Circ Count",
+      "path": "circ-id",
+      "field_doc": "",
+      "relation": "f45381a54504218e39aca33492d29306",
+      "column": {
+        "colname": "id",
+        "transform": "count",
+        "transform_label": "Count",
+        "aggregate": true
+      }
+    }
+  ],
+  "from": {
+    "alias": "f45381a54504218e39aca33492d29306",
+    "path": "circ-circ",
+    "table": "action.circulation",
+    "idlclass": "circ",
+    "join": {
+      "target_copy-c04d21c9fe3de7845ae87a892351d59c": {
+        "type": "inner",
+        "key": "id",
+        "alias": "c04d21c9fe3de7845ae87a892351d59c",
+        "path": "circ-target_copy",
+        "table": "asset.copy",
+        "idlclass": "acp",
+        "join": {
+          "call_number-8e2b33229707683d00a4879c97d184c2": {
+            "type": "inner",
+            "key": "id",
+            "alias": "e270529ab21c4330607ce994377bc2b0",
+            "path": "circ-target_copy-call_number",
+            "table": "asset.call_number",
+            "idlclass": "acn",
+            "join": {
+              "record-d3305dbc9fd90da113198381c9f3fe8c": {
+                "type": "inner",
+                "key": "id",
+                "alias": "d3305dbc9fd90da113198381c9f3fe8c",
+                "path": "circ-target_copy-call_number-record",
+                "table": "biblio.record_entry",
+                "idlclass": "bre",
+                "join": {
+                  "id-simple_record-c50635791b863caa3068dbd0ce02f06e": {
+                    "type": "inner",
+                    "key": "id",
+                    "alias": "24c245bbcb355e867681c5343406e2bf",
+                    "path": "circ-target_copy-call_number-record-id-simple_record",
+                    "table": "reporter.materialized_simple_record",
+                    "idlclass": "rmsr",
+                    "label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner) -> Bib Record (inner) -> Simple Record Extracts  (inner)"
+                  }
+                }
+              }
+            },
+            "label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner)"
+          },
+          "circ_modifier-768d5250fb709682128b83d8342846e9": {
+            "type": "inner",
+            "key": "code",
+            "alias": "fc07b38d3247a8fe04de8dce0c976d67",
+            "path": "circ-target_copy-circ_modifier",
+            "table": "config.circ_modifier",
+            "idlclass": "ccm",
+            "label": "Circulation -> Circulating Item (inner) -> Circulation Modifier (inner)"
+          }
+        }
+      },
+      "circ_lib-1b1556a777440479f8596f01727da8aa": {
+        "type": "inner",
+        "key": "id",
+        "alias": "9c96f0b4c92761f279b1a97a344ef03d",
+        "path": "circ-circ_lib",
+        "table": "actor.org_unit",
+        "idlclass": "aou",
+        "label": "Circulation -> Checkout / Renewal Library (inner)"
+      }
+    },
+    "label": "Circulation"
+  },
+  "where": [
+    {
+      "alias": "Call Number/Volume ID",
+      "path": "acn-id",
+      "field_doc": "",
+      "relation": "e270529ab21c4330607ce994377bc2b0",
+      "column": {
+        "colname": "id",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { ">": "0" }
+    },
+    {
+      "alias": "Code",
+      "path": "ccm-code",
+      "field_doc": "",
+      "relation": "fc07b38d3247a8fe04de8dce0c976d67",
+      "column": {
+        "colname": "code",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "in": "::P0" }
+    },
+    {
+      "alias": "Checkout Date/Time",
+      "path": "circ-xact_start",
+      "field_doc": "",
+      "relation": "f45381a54504218e39aca33492d29306",
+      "column": {
+        "colname": "xact_start",
+        "transform": "date",
+        "transform_label": "Date",
+        "aggregate": 0
+      },
+      "condition": { "between": "::P1" }
+    },
+    {
+      "alias": "Organizational Unit ID",
+      "path": "aou-id",
+      "field_doc": "",
+      "relation": "9c96f0b4c92761f279b1a97a344ef03d",
+      "column": {
+        "colname": "id",
+        "transform": "Bare",
+        "transform_label": "Raw Data",
+        "aggregate": 0
+      },
+      "condition": { "in": "::P2" }
+    }
+  ],
+  "having": [
+    {
+      "alias": "Circ ID",
+      "path": "circ-id",
+      "field_doc": "",
+      "relation": "f45381a54504218e39aca33492d29306",
+      "column": {
+        "colname": "id",
+        "transform": "count",
+        "transform_label": "Count",
+        "aggregate": 1
+      },
+      "condition": { ">": "::P3" }
+    }
+  ],
+  "display_cols": [
+    {
+      "name": "tcn_value",
+      "label": "TCN",
+      "datatype": "text",
+      "index": 0,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Call Number/Volume",
+          "from": "circ.acp",
+          "link": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn",
+          "jtype": "inner",
+          "uplink": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acn",
+          "struct": {
+            "name": "acn",
+            "label": "Call Number/Volume",
+            "table": "asset.call_number",
+            "pkey": "id",
+            "pkey_sequence": "asset.call_number_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "acn"
+          },
+          "table": "asset.call_number"
+        },
+        {
+          "label": "Bib Record",
+          "from": "circ.acp.acn",
+          "link": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre",
+          "jtype": "inner",
+          "uplink": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "bre",
+          "struct": {
+            "name": "bre",
+            "label": "Bibliographic Record",
+            "table": "biblio.record_entry",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "biblio.record_entry_id_seq",
+            "core_label": "Core sources",
+            "classname": "bre"
+          },
+          "table": "biblio.record_entry"
+        },
+        {
+          "label": "Simple Record Extracts ",
+          "from": "circ.acp.acn.bre",
+          "link": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre.rmsr",
+          "jtype": "inner",
+          "uplink": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "classname": "rmsr",
+          "struct": {
+            "name": "rmsr",
+            "label": "Fast Simple Record Extracts",
+            "table": "reporter.materialized_simple_record",
+            "pkey": "id",
+            "core_label": "Non-core sources",
+            "classname": "rmsr"
+          },
+          "table": "reporter.materialized_simple_record"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner) -> Bib Record (inner) -> Simple Record Extracts  (inner)",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "title",
+      "label": "Title",
+      "datatype": "text",
+      "index": 1,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Call Number/Volume",
+          "from": "circ.acp",
+          "link": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn",
+          "jtype": "inner",
+          "uplink": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acn",
+          "struct": {
+            "name": "acn",
+            "label": "Call Number/Volume",
+            "table": "asset.call_number",
+            "pkey": "id",
+            "pkey_sequence": "asset.call_number_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "acn"
+          },
+          "table": "asset.call_number"
+        },
+        {
+          "label": "Bib Record",
+          "from": "circ.acp.acn",
+          "link": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre",
+          "jtype": "inner",
+          "uplink": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "bre",
+          "struct": {
+            "name": "bre",
+            "label": "Bibliographic Record",
+            "table": "biblio.record_entry",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "biblio.record_entry_id_seq",
+            "core_label": "Core sources",
+            "classname": "bre"
+          },
+          "table": "biblio.record_entry"
+        },
+        {
+          "label": "Simple Record Extracts ",
+          "from": "circ.acp.acn.bre",
+          "link": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre.rmsr",
+          "jtype": "inner",
+          "uplink": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "classname": "rmsr",
+          "struct": {
+            "name": "rmsr",
+            "label": "Fast Simple Record Extracts",
+            "table": "reporter.materialized_simple_record",
+            "pkey": "id",
+            "core_label": "Non-core sources",
+            "classname": "rmsr"
+          },
+          "table": "reporter.materialized_simple_record"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner) -> Bib Record (inner) -> Simple Record Extracts  (inner)",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "author",
+      "label": "Author",
+      "datatype": "text",
+      "index": 2,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Call Number/Volume",
+          "from": "circ.acp",
+          "link": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn",
+          "jtype": "inner",
+          "uplink": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acn",
+          "struct": {
+            "name": "acn",
+            "label": "Call Number/Volume",
+            "table": "asset.call_number",
+            "pkey": "id",
+            "pkey_sequence": "asset.call_number_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "acn"
+          },
+          "table": "asset.call_number"
+        },
+        {
+          "label": "Bib Record",
+          "from": "circ.acp.acn",
+          "link": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre",
+          "jtype": "inner",
+          "uplink": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "bre",
+          "struct": {
+            "name": "bre",
+            "label": "Bibliographic Record",
+            "table": "biblio.record_entry",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "biblio.record_entry_id_seq",
+            "core_label": "Core sources",
+            "classname": "bre"
+          },
+          "table": "biblio.record_entry"
+        },
+        {
+          "label": "Simple Record Extracts ",
+          "from": "circ.acp.acn.bre",
+          "link": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre.rmsr",
+          "jtype": "inner",
+          "uplink": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "classname": "rmsr",
+          "struct": {
+            "name": "rmsr",
+            "label": "Fast Simple Record Extracts",
+            "table": "reporter.materialized_simple_record",
+            "pkey": "id",
+            "core_label": "Non-core sources",
+            "classname": "rmsr"
+          },
+          "table": "reporter.materialized_simple_record"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner) -> Bib Record (inner) -> Simple Record Extracts  (inner)",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "pubdate",
+      "label": "Publication Year",
+      "datatype": "int",
+      "index": 3,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Call Number/Volume",
+          "from": "circ.acp",
+          "link": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn",
+          "jtype": "inner",
+          "uplink": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acn",
+          "struct": {
+            "name": "acn",
+            "label": "Call Number/Volume",
+            "table": "asset.call_number",
+            "pkey": "id",
+            "pkey_sequence": "asset.call_number_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "acn"
+          },
+          "table": "asset.call_number"
+        },
+        {
+          "label": "Bib Record",
+          "from": "circ.acp.acn",
+          "link": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre",
+          "jtype": "inner",
+          "uplink": {
+            "name": "record",
+            "label": "Bib Record",
+            "type": "link",
+            "key": "id",
+            "class": "bre",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "bre",
+          "struct": {
+            "name": "bre",
+            "label": "Bibliographic Record",
+            "table": "biblio.record_entry",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "biblio.record_entry_id_seq",
+            "core_label": "Core sources",
+            "classname": "bre"
+          },
+          "table": "biblio.record_entry"
+        },
+        {
+          "label": "Simple Record Extracts ",
+          "from": "circ.acp.acn.bre",
+          "link": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn.bre.rmsr",
+          "jtype": "inner",
+          "uplink": {
+            "name": "simple_record",
+            "label": "Simple Record Extracts ",
+            "virtual": true,
+            "type": "link",
+            "key": "id",
+            "class": "rmsr",
+            "reltype": "might_have",
+            "datatype": "link"
+          },
+          "classname": "rmsr",
+          "struct": {
+            "name": "rmsr",
+            "label": "Fast Simple Record Extracts",
+            "table": "reporter.materialized_simple_record",
+            "pkey": "id",
+            "core_label": "Non-core sources",
+            "classname": "rmsr"
+          },
+          "table": "reporter.materialized_simple_record"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner) -> Bib Record (inner) -> Simple Record Extracts  (inner)",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "code",
+      "label": "Circ Modifier",
+      "selector": "name",
+      "datatype": "id",
+      "index": 4,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Circulation Modifier",
+          "from": "circ.acp",
+          "link": {
+            "name": "circ_modifier",
+            "label": "Circulation Modifier",
+            "type": "link",
+            "key": "code",
+            "class": "ccm",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.ccm",
+          "jtype": "inner",
+          "uplink": {
+            "name": "circ_modifier",
+            "label": "Circulation Modifier",
+            "type": "link",
+            "key": "code",
+            "class": "ccm",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "ccm",
+          "struct": {
+            "name": "ccm",
+            "label": "Circulation Modifier",
+            "table": "config.circ_modifier",
+            "pkey": "code",
+            "core_label": "Non-core sources",
+            "classname": "ccm"
+          },
+          "table": "config.circ_modifier"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Circulation Modifier (inner)",
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "id",
+      "label": "Circ Count",
+      "datatype": "id",
+      "index": 5,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        }
+      ],
+      "path_label": "Circulation",
+      "transform": {
+        "label": "Count",
+        "transform": "count",
+        "aggregate": true
+      },
+      "doc_text": ""
+    }
+  ],
+  "filter_cols": [
+    {
+      "name": "id",
+      "label": "Call Number/Volume ID",
+      "datatype": "id",
+      "index": 0,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Call Number/Volume",
+          "from": "circ.acp",
+          "link": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.acn",
+          "jtype": "inner",
+          "uplink": {
+            "name": "call_number",
+            "label": "Call Number/Volume",
+            "type": "link",
+            "key": "id",
+            "class": "acn",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acn",
+          "struct": {
+            "name": "acn",
+            "label": "Call Number/Volume",
+            "table": "asset.call_number",
+            "pkey": "id",
+            "pkey_sequence": "asset.call_number_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "acn"
+          },
+          "table": "asset.call_number"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Call Number/Volume (inner)",
+      "operator": { "label": "Greater than", "op": ">" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": "",
+      "value": "0"
+    },
+    {
+      "name": "code",
+      "label": "Code",
+      "selector": "name",
+      "datatype": "id",
+      "index": 1,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Circulating Item",
+          "from": "circ",
+          "link": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp",
+          "jtype": "inner",
+          "uplink": {
+            "name": "target_copy",
+            "label": "Circulating Item",
+            "type": "link",
+            "key": "id",
+            "class": "acp",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "acp",
+          "struct": {
+            "name": "acp",
+            "label": "Item",
+            "table": "asset.copy",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "asset.copy_id_seq",
+            "core_label": "Core sources",
+            "classname": "acp"
+          },
+          "table": "asset.copy"
+        },
+        {
+          "label": "Circulation Modifier",
+          "from": "circ.acp",
+          "link": {
+            "name": "circ_modifier",
+            "label": "Circulation Modifier",
+            "type": "link",
+            "key": "code",
+            "class": "ccm",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "id": "circ.acp.ccm",
+          "jtype": "inner",
+          "uplink": {
+            "name": "circ_modifier",
+            "label": "Circulation Modifier",
+            "type": "link",
+            "key": "code",
+            "class": "ccm",
+            "reltype": "has_a",
+            "datatype": "link"
+          },
+          "classname": "ccm",
+          "struct": {
+            "name": "ccm",
+            "label": "Circulation Modifier",
+            "table": "config.circ_modifier",
+            "pkey": "code",
+            "core_label": "Non-core sources",
+            "classname": "ccm"
+          },
+          "table": "config.circ_modifier"
+        }
+      ],
+      "path_label": "Circulation -> Circulating Item (inner) -> Circulation Modifier (inner)",
+      "operator": { "label": "In list", "op": "in" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "id",
+      "label": "Circ ID",
+      "datatype": "id",
+      "index": 2,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        }
+      ],
+      "path_label": "Circulation",
+      "operator": { "label": "Greater than", "op": ">" },
+      "transform": {
+        "label": "Count",
+        "transform": "count",
+        "aggregate": true
+      },
+      "doc_text": ""
+    },
+    {
+      "name": "xact_start",
+      "label": "Checkout Date/Time",
+      "datatype": "timestamp",
+      "index": 3,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        }
+      ],
+      "path_label": "Circulation",
+      "operator": { "label": "Between", "op": "between" },
+      "transform": { "label": "Date", "transform": "date", "aggregate": false },
+      "doc_text": ""
+    },
+    {
+      "name": "id",
+      "label": "Organizational Unit ID",
+      "selector": "shortname",
+      "datatype": "org_unit",
+      "index": 4,
+      "path": [
+        {
+          "label": "Circulation",
+          "id": "circ",
+          "jtype": "inner",
+          "classname": "circ",
+          "struct": {
+            "name": "circ",
+            "label": "Circulation",
+            "table": "action.circulation",
+            "core": true,
+            "pkey": "id",
+            "pkey_sequence": "money.billable_xact_id_seq",
+            "core_label": "Core sources",
+            "classname": "circ"
+          },
+          "table": "action.circulation"
+        },
+        {
+          "label": "Checkout / Renewal Library",
+          "from": "circ",
+          "link": {
+            "name": "circ_lib",
+            "label": "Checkout / Renewal Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "id": "circ.aou",
+          "jtype": "inner",
+          "uplink": {
+            "name": "circ_lib",
+            "label": "Checkout / Renewal Library",
+            "type": "link",
+            "key": "id",
+            "class": "aou",
+            "reltype": "has_a",
+            "datatype": "org_unit"
+          },
+          "classname": "aou",
+          "struct": {
+            "name": "aou",
+            "label": "Organizational Unit",
+            "table": "actor.org_unit",
+            "pkey": "id",
+            "pkey_sequence": "actor.org_unit_id_seq",
+            "core_label": "Non-core sources",
+            "classname": "aou"
+          },
+          "table": "actor.org_unit"
+        }
+      ],
+      "path_label": "Circulation -> Checkout / Renewal Library (inner)",
+      "operator": { "label": "In list", "op": "in" },
+      "transform": {
+        "transform": "Bare",
+        "label": "Raw Data",
+        "aggregate": false
+      },
+      "doc_text": ""
+    }
+  ]
+}

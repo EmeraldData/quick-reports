@@ -116,7 +116,8 @@ class templateDecoder
 
         if ( isset( $jsonData->filter_cols ) ) {
             foreach ( $jsonData->filter_cols as $fc ) {
-                    if ( $fc->path_label === $columnLabel ) {
+                    $fcFullLabel = $fc->path_label . " -> " . $fc->label;
+                    if ( $fcFullLabel === $columnLabelFull ) {
                         $dataType = $fc->datatype;
                         $op = $fc->operator->op;
                         $opLabel = $fc->operator->label;
@@ -160,19 +161,6 @@ class templateDecoder
                 ,'table' => $tableName
                 ,'paramType' => $paramType
         );
-    }
-
-    function returnColumnLabel( $d, $rel, $tag, $val, $retVal ) {
-        $val = "";
-        foreach( $d as $d1 ) {
-            if ( isset( $d1->$tag ) ) {
-                if ( $d1->$tag == $val ) {
-                    $val = $d1->$retVal;
-                    break;
-                }
-            }
-        }
-        return $val;
     }
 }	
 ?>
